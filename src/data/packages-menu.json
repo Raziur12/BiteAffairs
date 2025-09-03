@@ -1,0 +1,71 @@
+{
+  "title": "Party Packages",
+  "description": "Complete party packages for different group sizes",
+  "categories": [
+    {
+      "name": "Small Party (10-15 people)",
+      "items": [
+        {
+          "id": "p1",
+          "name": "Classic Vegetarian Package",
+          "description": "Dal, Paneer curry, Vegetable, Rice, Roti, Salad, Dessert",
+          "price": 2500,
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/veg-package.jpg"
+        },
+        {
+          "id": "p2",
+          "name": "Jain Special Package",
+          "description": "Jain Dal, Paneer Tikka, Aloo Gobi, Rice, Roti, Dessert",
+          "price": 2800,
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/jain-package.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Medium Party (20-30 people)",
+      "items": [
+        {
+          "id": "p3",
+          "name": "Deluxe Vegetarian Package",
+          "description": "2 Dal varieties, 2 Paneer dishes, Mixed vegetables, Biryani, Roti, Dessert",
+          "price": 5500,
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/deluxe-veg.jpg"
+        },
+        {
+          "id": "p4",
+          "name": "Mixed Package",
+          "description": "Veg & Non-veg curries, Chicken Biryani, Veg Biryani, Roti, Dessert",
+          "price": 6200,
+          "isJain": false,
+          "isVeg": false,
+          "isNonVeg": true,
+          "image": "/images/mixed-package.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Large Party (50+ people)",
+      "items": [
+        {
+          "id": "p5",
+          "name": "Grand Celebration Package",
+          "description": "Complete buffet setup with live counters, multiple cuisines",
+          "price": 12000,
+          "isJain": false,
+          "isVeg": false,
+          "isNonVeg": true,
+          "image": "/images/grand-package.jpg"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "title": "Cocktail Party Menu",
+  "description": "Elegant finger foods and appetizers for cocktail parties",
+  "categories": [
+    {
+      "name": "Canapés & Finger Foods",
+      "items": [
+        {
+          "id": "ck1",
+          "name": "Bruschetta Platter",
+          "description": "Toasted bread topped with tomatoes, herbs and cheese",
+          "price": 450,
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/bruschetta.jpg"
+        },
+        {
+          "id": "ck2",
+          "name": "Chicken Canapés",
+          "description": "Bite-sized chicken appetizers with various toppings",
+          "price": 680,
+          "isJain": false,
+          "isVeg": false,
+          "isNonVeg": true,
+          "image": "/images/chicken-canapes.jpg"
+        },
+        {
+          "id": "ck3",
+          "name": "Cheese & Crackers Board",
+          "description": "Assorted cheese varieties with premium crackers",
+          "price": 850,
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/cheese-board.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Hot Appetizers",
+      "items": [
+        {
+          "id": "ck4",
+          "name": "Stuffed Mushrooms",
+          "description": "Button mushrooms stuffed with herbs and cheese",
+          "price": 520,
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/stuffed-mushrooms.jpg"
+        },
+        {
+          "id": "ck5",
+          "name": "Mini Quiches",
+          "description": "Bite-sized quiches with various fillings",
+          "price": 480,
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/mini-quiches.jpg"
+        },
+        {
+          "id": "ck6",
+          "name": "Prawn Cocktail",
+          "description": "Chilled prawns with cocktail sauce",
+          "price": 920,
+          "isJain": false,
+          "isVeg": false,
+          "isNonVeg": true,
+          "image": "/images/prawn-cocktail.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Sweet Treats",
+      "items": [
+        {
+          "id": "ck7",
+          "name": "Mini Dessert Platter",
+          "description": "Assorted mini desserts and pastries",
+          "price": 650,
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/mini-desserts.jpg"
+        },
+        {
+          "id": "ck8",
+          "name": "Chocolate Fountain",
+          "description": "Interactive chocolate fountain with fruits and treats",
+          "price": 1200,
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/chocolate-fountain.jpg"
+        }
+      ]
+    }
+  ]
+}

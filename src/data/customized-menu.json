@@ -1,0 +1,101 @@
+{
+  "title": "Customized Menu",
+  "description": "Build your own menu with our customizable options",
+  "categories": [
+    {
+      "name": "Appetizers",
+      "items": [
+        {
+          "id": "c1",
+          "name": "Samosa Platter",
+          "description": "Crispy triangular pastries with spiced filling (per dozen)",
+          "price": 240,
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/samosa.jpg"
+        },
+        {
+          "id": "c2",
+          "name": "Chicken Wings",
+          "description": "Spicy grilled chicken wings (per dozen)",
+          "price": 480,
+          "isJain": false,
+          "isVeg": false,
+          "isNonVeg": true,
+          "image": "/images/chicken-wings.jpg"
+        },
+        {
+          "id": "c3",
+          "name": "Paneer Pakora",
+          "description": "Crispy cottage cheese fritters (per kg)",
+          "price": 420,
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/paneer-pakora.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Main Course",
+      "items": [
+        {
+          "id": "c4",
+          "name": "Butter Chicken",
+          "description": "Creamy tomato-based chicken curry (serves 4-5)",
+          "price": 650,
+          "isJain": false,
+          "isVeg": false,
+          "isNonVeg": true,
+          "image": "/images/butter-chicken.jpg"
+        },
+        {
+          "id": "c5",
+          "name": "Rajma Masala",
+          "description": "Red kidney beans in spiced gravy (serves 4-5)",
+          "price": 380,
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/rajma.jpg"
+        },
+        {
+          "id": "c6",
+          "name": "Fish Curry",
+          "description": "Traditional fish curry with coconut (serves 4-5)",
+          "price": 720,
+          "isJain": false,
+          "isVeg": false,
+          "isNonVeg": true,
+          "image": "/images/fish-curry.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Rice & Breads",
+      "items": [
+        {
+          "id": "c7",
+          "name": "Jeera Rice",
+          "description": "Cumin flavored basmati rice (serves 4-5)",
+          "price": 280,
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/jeera-rice.jpg"
+        },
+        {
+          "id": "c8",
+          "name": "Butter Naan",
+          "description": "Soft leavened bread with butter (per dozen)",
+          "price": 180,
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/butter-naan.jpg"
+        }
+      ]
+    }
+  ]
+}
