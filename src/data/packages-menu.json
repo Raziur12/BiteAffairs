@@ -1,69 +1,288 @@
 {
-  "title": "Party Packages",
-  "description": "Complete party packages for different group sizes",
   "categories": [
     {
-      "name": "Small Party (10-15 people)",
+      "name": "Standard Menu Packages",
       "items": [
         {
-          "id": "p1",
-          "name": "Classic Vegetarian Package",
-          "description": "Dal, Paneer curry, Vegetable, Rice, Roti, Salad, Dessert",
-          "price": 2500,
+          "id": "std1",
+          "name": "Paneer Tikka",
+          "description": "Grilled cottage cheese cubes with aromatic spices",
+          "price": 280,
+          "quantity": "40pc",
+          "category": "starters",
           "isJain": false,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/veg-package.jpg"
+          "image": "/images/menu/paneer-tikka.jpg"
         },
         {
-          "id": "p2",
-          "name": "Jain Special Package",
-          "description": "Jain Dal, Paneer Tikka, Aloo Gobi, Rice, Roti, Dessert",
-          "price": 2800,
+          "id": "std2",
+          "name": "Malai Paneer Tikka",
+          "description": "Creamy cottage cheese tikka with malai marinade",
+          "price": 320,
+          "quantity": "40pc",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/paneer-tikka.jpg"
+        },
+        {
+          "id": "std3",
+          "name": "Haryali Paneer Tikka",
+          "description": "Green herb marinated cottage cheese tikka",
+          "price": 300,
+          "quantity": "40pc",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/paneer-tikka.jpg"
+        },
+        {
+          "id": "std4",
+          "name": "Soya Chaap Tikka",
+          "description": "Marinated soya chaap grilled to perfection",
+          "price": 250,
+          "quantity": "40pc",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/spring-rolls.jpg"
+        },
+        {
+          "id": "std5",
+          "name": "Spring Rolls",
+          "description": "Crispy rolls filled with fresh vegetables",
+          "price": 220,
+          "quantity": "40pc",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/spring-rolls.jpg"
+        },
+        {
+          "id": "std6",
+          "name": "Honey Chili Potatoes",
+          "description": "Crispy potatoes tossed in honey chili sauce",
+          "price": 180,
+          "quantity": "2kg",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/aloo-tikki.jpg"
+        },
+        {
+          "id": "std7",
+          "name": "Paneer Lababdar",
+          "description": "Rich cottage cheese curry in tomato gravy",
+          "price": 380,
+          "quantity": "2kg",
+          "category": "main_course",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/paneer-butter-masala.jpg"
+        },
+        {
+          "id": "std8",
+          "name": "Dal Makhani",
+          "description": "Rich and creamy black lentils cooked in butter",
+          "price": 320,
+          "quantity": "2kg",
+          "category": "main_course",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/dal-makhani.jpg"
+        },
+        {
+          "id": "std9",
+          "name": "Jeera Rice",
+          "description": "Cumin flavored basmati rice",
+          "price": 180,
+          "quantity": "2kg",
+          "category": "main_course",
           "isJain": true,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/jain-package.jpg"
-        }
-      ]
-    },
-    {
-      "name": "Medium Party (20-30 people)",
-      "items": [
+          "image": "/images/menu/jeera-rice.jpg"
+        },
         {
-          "id": "p3",
-          "name": "Deluxe Vegetarian Package",
-          "description": "2 Dal varieties, 2 Paneer dishes, Mixed vegetables, Biryani, Roti, Dessert",
-          "price": 5500,
+          "id": "std10",
+          "name": "Butter Naan",
+          "description": "Soft leavened bread with butter",
+          "price": 120,
+          "quantity": "20pc",
+          "category": "breads",
           "isJain": false,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/deluxe-veg.jpg"
+          "image": "/images/menu/butter-naan.jpg"
         },
         {
-          "id": "p4",
-          "name": "Mixed Package",
-          "description": "Veg & Non-veg curries, Chicken Biryani, Veg Biryani, Roti, Dessert",
-          "price": 6200,
-          "isJain": false,
-          "isVeg": false,
-          "isNonVeg": true,
-          "image": "/images/mixed-package.jpg"
+          "id": "std11",
+          "name": "Gulab Jamun",
+          "description": "Soft milk dumplings in sugar syrup",
+          "price": 160,
+          "quantity": "40pc",
+          "category": "desserts",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/gulab-jamun.jpg"
         }
       ]
     },
     {
-      "name": "Large Party (50+ people)",
+      "name": "Premium Menu Packages",
       "items": [
         {
-          "id": "p5",
-          "name": "Grand Celebration Package",
-          "description": "Complete buffet setup with live counters, multiple cuisines",
-          "price": 12000,
+          "id": "prem1",
+          "name": "Kesariya Paneer Tikka",
+          "description": "Saffron infused cottage cheese tikka",
+          "price": 350,
+          "quantity": "40pc",
+          "category": "starters",
           "isJain": false,
-          "isVeg": false,
-          "isNonVeg": true,
-          "image": "/images/grand-package.jpg"
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/paneer-tikka.jpg"
+        },
+        {
+          "id": "prem2",
+          "name": "Malai Broccoli Tikka",
+          "description": "Creamy marinated broccoli tikka",
+          "price": 280,
+          "quantity": "40pc",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/spring-rolls.jpg"
+        },
+        {
+          "id": "prem3",
+          "name": "Chilli Basil Tofu",
+          "description": "Spicy tofu with fresh basil and chilies",
+          "price": 320,
+          "quantity": "40pc",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/paneer-pakora.jpg"
+        },
+        {
+          "id": "prem4",
+          "name": "Cottage Cheese Satay",
+          "description": "Grilled cottage cheese skewers with peanut sauce",
+          "price": 380,
+          "quantity": "40pc",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/paneer-tikka.jpg"
+        },
+        {
+          "id": "prem5",
+          "name": "Paneer Butter Masala",
+          "description": "Cottage cheese in rich tomato and butter gravy",
+          "price": 420,
+          "quantity": "2kg",
+          "category": "main_course",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/paneer-butter-masala.jpg"
+        },
+        {
+          "id": "prem6",
+          "name": "Malai Kofta",
+          "description": "Cottage cheese dumplings in creamy gravy",
+          "price": 380,
+          "quantity": "2kg",
+          "category": "main_course",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/paneer-butter-masala.jpg"
+        },
+        {
+          "id": "prem7",
+          "name": "Dum Aloo Kashmiri",
+          "description": "Baby potatoes in rich Kashmiri gravy",
+          "price": 320,
+          "quantity": "2kg",
+          "category": "main_course",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/aloo-tikki.jpg"
+        },
+        {
+          "id": "prem8",
+          "name": "Veg Thai Curry",
+          "description": "Mixed vegetables in coconut Thai curry",
+          "price": 350,
+          "quantity": "2kg",
+          "category": "main_course",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/rajma.jpg"
+        },
+        {
+          "id": "prem9",
+          "name": "Veg Biryani",
+          "description": "Aromatic basmati rice with mixed vegetables",
+          "price": 380,
+          "quantity": "2kg",
+          "category": "main_course",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/veg-biryani.jpg"
+        },
+        {
+          "id": "prem10",
+          "name": "Garlic Naan",
+          "description": "Soft bread with garlic and herbs",
+          "price": 140,
+          "quantity": "20pc",
+          "category": "breads",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/butter-naan.jpg"
+        },
+        {
+          "id": "prem11",
+          "name": "Mango Phirni",
+          "description": "Creamy rice pudding with mango flavor",
+          "price": 220,
+          "quantity": "2kg",
+          "category": "desserts",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/rasmalai.jpg"
+        },
+        {
+          "id": "prem12",
+          "name": "Moongdal Halwa",
+          "description": "Rich dessert made from yellow lentils",
+          "price": 180,
+          "quantity": "2kg",
+          "category": "desserts",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/gulab-jamun.jpg"
         }
       ]
     }

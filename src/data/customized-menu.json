@@ -3,97 +3,296 @@
   "description": "Build your own menu with our customizable options",
   "categories": [
     {
-      "name": "Appetizers",
+      "name": "Vegetarian Starters",
       "items": [
         {
-          "id": "c1",
-          "name": "Samosa Platter",
-          "description": "Crispy triangular pastries with spiced filling (per dozen)",
-          "price": 240,
+          "id": "veg1",
+          "name": "Paneer Tikka",
+          "description": "Grilled cottage cheese cubes with aromatic spices",
+          "price": 80,
+          "portion_size": "2PCS",
+          "category": "starters",
           "isJain": false,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/samosa.jpg"
+          "image": "/images/menu/paneer-tikka.jpg"
         },
         {
-          "id": "c2",
-          "name": "Chicken Wings",
-          "description": "Spicy grilled chicken wings (per dozen)",
-          "price": 480,
+          "id": "veg2",
+          "name": "Haryali Paneer Tikka",
+          "description": "Green herb marinated cottage cheese tikka",
+          "price": 80,
+          "portion_size": "2PCS",
+          "category": "starters",
           "isJain": false,
-          "isVeg": false,
-          "isNonVeg": true,
-          "image": "/images/chicken-wings.jpg"
-        },
-        {
-          "id": "c3",
-          "name": "Paneer Pakora",
-          "description": "Crispy cottage cheese fritters (per kg)",
-          "price": 420,
-          "isJain": true,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/paneer-pakora.jpg"
+          "image": "/images/menu/paneer-tikka.jpg"
+        },
+        {
+          "id": "veg3",
+          "name": "Malai Paneer Tikka",
+          "description": "Creamy cottage cheese tikka with malai marinade",
+          "price": 110,
+          "portion_size": "2PCS",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/paneer-tikka.jpg"
+        },
+        {
+          "id": "veg4",
+          "name": "Tandoori Aloo",
+          "description": "Spiced potatoes grilled in tandoor",
+          "price": 50,
+          "portion_size": "2PCS",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/aloo-tikki.jpg"
+        },
+        {
+          "id": "veg5",
+          "name": "Spring Rolls",
+          "description": "Crispy rolls filled with fresh vegetables",
+          "price": 80,
+          "portion_size": "2PCS",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/spring-rolls.jpg"
+        },
+        {
+          "id": "veg6",
+          "name": "Honey Chilli Potato",
+          "description": "Crispy potatoes tossed in honey chili sauce",
+          "price": 50,
+          "portion_size": "100GM",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/aloo-tikki.jpg"
         }
       ]
     },
     {
-      "name": "Main Course",
+      "name": "Vegetarian Main Course",
       "items": [
         {
-          "id": "c4",
-          "name": "Butter Chicken",
-          "description": "Creamy tomato-based chicken curry (serves 4-5)",
-          "price": 650,
-          "isJain": false,
-          "isVeg": false,
-          "isNonVeg": true,
-          "image": "/images/butter-chicken.jpg"
-        },
-        {
-          "id": "c5",
-          "name": "Rajma Masala",
-          "description": "Red kidney beans in spiced gravy (serves 4-5)",
-          "price": 380,
+          "id": "veg7",
+          "name": "Paneer Butter Masala",
+          "description": "Cottage cheese in rich tomato and butter gravy",
+          "price": 100,
+          "portion_size": "100GM",
+          "category": "main_course",
           "isJain": false,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/rajma.jpg"
+          "image": "/images/menu/paneer-butter-masala.jpg"
         },
         {
-          "id": "c6",
-          "name": "Fish Curry",
-          "description": "Traditional fish curry with coconut (serves 4-5)",
-          "price": 720,
+          "id": "veg8",
+          "name": "Dal Makhani",
+          "description": "Rich and creamy black lentils cooked in butter",
+          "price": 100,
+          "portion_size": "100GM",
+          "category": "main_course",
           "isJain": false,
-          "isVeg": false,
-          "isNonVeg": true,
-          "image": "/images/fish-curry.jpg"
-        }
-      ]
-    },
-    {
-      "name": "Rice & Breads",
-      "items": [
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/dal-makhani.jpg"
+        },
         {
-          "id": "c7",
+          "id": "veg9",
+          "name": "Veg Biryani",
+          "description": "Aromatic basmati rice with mixed vegetables",
+          "price": 90,
+          "portion_size": "100GM",
+          "category": "main_course",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/veg-biryani.jpg"
+        },
+        {
+          "id": "veg10",
           "name": "Jeera Rice",
-          "description": "Cumin flavored basmati rice (serves 4-5)",
-          "price": 280,
+          "description": "Cumin flavored basmati rice",
+          "price": 50,
+          "portion_size": "100GM",
+          "category": "main_course",
           "isJain": true,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/jeera-rice.jpg"
+          "image": "/images/menu/jeera-rice.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Non-Vegetarian Starters",
+      "items": [
+        {
+          "id": "nonveg1",
+          "name": "Chicken Tikka",
+          "description": "Grilled chicken pieces with aromatic spices",
+          "price": 90,
+          "portion_size": "2PCS",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": false,
+          "isNonVeg": true,
+          "image": "/images/menu/chicken-curry.jpg"
         },
         {
-          "id": "c8",
-          "name": "Butter Naan",
-          "description": "Soft leavened bread with butter (per dozen)",
-          "price": 180,
+          "id": "nonveg2",
+          "name": "BBQ Chicken Wings",
+          "description": "Barbecue grilled chicken wings",
+          "price": 100,
+          "portion_size": "2PCS",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": false,
+          "isNonVeg": true,
+          "image": "/images/menu/chicken-wings.jpg"
+        },
+        {
+          "id": "nonveg3",
+          "name": "Fish Tikka",
+          "description": "Marinated fish pieces grilled to perfection",
+          "price": 130,
+          "portion_size": "2PCS",
+          "category": "starters",
+          "isJain": false,
+          "isVeg": false,
+          "isNonVeg": true,
+          "image": "/images/menu/fish-curry.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Non-Vegetarian Main Course",
+      "items": [
+        {
+          "id": "nonveg4",
+          "name": "Butter Chicken",
+          "description": "Creamy tomato-based chicken curry",
+          "price": 130,
+          "portion_size": "100GM",
+          "category": "main_course",
+          "isJain": false,
+          "isVeg": false,
+          "isNonVeg": true,
+          "image": "/images/menu/chicken-curry.jpg"
+        },
+        {
+          "id": "nonveg5",
+          "name": "Fish Curry",
+          "description": "Traditional fish curry with coconut",
+          "price": 175,
+          "portion_size": "100GM",
+          "category": "main_course",
+          "isJain": false,
+          "isVeg": false,
+          "isNonVeg": true,
+          "image": "/images/menu/fish-curry.jpg"
+        },
+        {
+          "id": "nonveg6",
+          "name": "Chicken Biryani",
+          "description": "Aromatic basmati rice with spiced chicken",
+          "price": 120,
+          "portion_size": "100GM",
+          "category": "main_course",
+          "isJain": false,
+          "isVeg": false,
+          "isNonVeg": true,
+          "image": "/images/menu/veg-biryani.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Breads",
+      "items": [
+        {
+          "id": "bread1",
+          "name": "Tandoori Roti",
+          "description": "Traditional clay oven baked bread",
+          "price": 20,
+          "portion_size": "1PC",
+          "category": "breads",
           "isJain": false,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/butter-naan.jpg"
+          "image": "/images/menu/butter-naan.jpg"
+        },
+        {
+          "id": "bread2",
+          "name": "Butter Naan",
+          "description": "Soft leavened bread with butter",
+          "price": 30,
+          "portion_size": "1PC",
+          "category": "breads",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/butter-naan.jpg"
+        },
+        {
+          "id": "bread3",
+          "name": "Garlic Naan",
+          "description": "Soft bread with garlic and herbs",
+          "price": 45,
+          "portion_size": "1PC",
+          "category": "breads",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/butter-naan.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Desserts",
+      "items": [
+        {
+          "id": "dessert1",
+          "name": "Gulab Jamun",
+          "description": "Soft milk dumplings in sugar syrup",
+          "price": 60,
+          "portion_size": "2PC",
+          "category": "desserts",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/gulab-jamun.jpg"
+        },
+        {
+          "id": "dessert2",
+          "name": "Mango Phirni",
+          "description": "Creamy rice pudding with mango flavor",
+          "price": 60,
+          "portion_size": "100GM",
+          "category": "desserts",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/rasmalai.jpg"
+        },
+        {
+          "id": "dessert3",
+          "name": "Brownies",
+          "description": "Rich chocolate brownies",
+          "price": 60,
+          "portion_size": "1.5PC",
+          "category": "desserts",
+          "isJain": false,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/default-food.jpg"
         }
       ]
     }

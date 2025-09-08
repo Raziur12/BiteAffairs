@@ -3,97 +3,219 @@
   "description": "Pure vegetarian menu following Jain dietary principles",
   "categories": [
     {
-      "name": "Appetizers",
+      "name": "Jain Starters",
       "items": [
         {
-          "id": "j1",
+          "id": "jain1",
+          "name": "Haryali Paneer Tikka",
+          "description": "Green herb marinated cottage cheese tikka",
+          "price": 300,
+          "quantity": "40pc",
+          "category": "starters",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/paneer-tikka.jpg"
+        },
+        {
+          "id": "jain2",
+          "name": "Soya Chaap Tikka",
+          "description": "Marinated soya chaap grilled to perfection",
+          "price": 250,
+          "quantity": "40pc",
+          "category": "starters",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/spring-rolls.jpg"
+        },
+        {
+          "id": "jain3",
+          "name": "Tandoori Aloo",
+          "description": "Spiced potatoes grilled in tandoor",
+          "price": 180,
+          "quantity": "40pc",
+          "category": "starters",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/aloo-tikki.jpg"
+        },
+        {
+          "id": "jain4",
+          "name": "Honey Chilli Potato",
+          "description": "Crispy potatoes tossed in honey chili sauce",
+          "price": 200,
+          "quantity": "2kg",
+          "category": "starters",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/aloo-tikki.jpg"
+        },
+        {
+          "id": "jain5",
           "name": "Paneer Tikka",
           "description": "Grilled cottage cheese cubes with aromatic spices",
           "price": 280,
+          "quantity": "40pc",
+          "category": "starters",
           "isJain": true,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/paneer-tikka.jpg"
+          "image": "/images/menu/paneer-tikka.jpg"
         },
         {
-          "id": "j2",
-          "name": "Aloo Tikki",
-          "description": "Crispy potato patties served with chutneys",
-          "price": 180,
+          "id": "jain6",
+          "name": "Malai Paneer Tikka",
+          "description": "Creamy cottage cheese tikka with malai marinade",
+          "price": 320,
+          "quantity": "40pc",
+          "category": "starters",
           "isJain": true,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/aloo-tikki.jpg"
-        },
-        {
-          "id": "j3",
-          "name": "Vegetable Spring Rolls",
-          "description": "Crispy rolls filled with fresh vegetables",
-          "price": 220,
-          "isJain": true,
-          "isVeg": true,
-          "isNonVeg": false,
-          "image": "/images/spring-rolls.jpg"
+          "image": "/images/menu/paneer-tikka.jpg"
         }
       ]
     },
     {
-      "name": "Main Course",
+      "name": "Jain Main Course",
       "items": [
         {
-          "id": "j4",
-          "name": "Dal Makhani",
-          "description": "Rich and creamy black lentils cooked in butter",
-          "price": 320,
-          "isJain": true,
-          "isVeg": true,
-          "isNonVeg": false,
-          "image": "/images/dal-makhani.jpg"
-        },
-        {
-          "id": "j5",
+          "id": "jain7",
           "name": "Paneer Butter Masala",
           "description": "Cottage cheese in rich tomato and butter gravy",
           "price": 380,
+          "quantity": "2kg",
+          "category": "main_course",
           "isJain": true,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/paneer-butter-masala.jpg"
+          "image": "/images/menu/paneer-butter-masala.jpg"
         },
         {
-          "id": "j6",
-          "name": "Vegetable Biryani",
-          "description": "Aromatic basmati rice with mixed vegetables",
-          "price": 350,
+          "id": "jain8",
+          "name": "Dal Makhani",
+          "description": "Rich and creamy black lentils cooked in butter",
+          "price": 320,
+          "quantity": "2kg",
+          "category": "main_course",
           "isJain": true,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/veg-biryani.jpg"
+          "image": "/images/menu/dal-makhani.jpg"
+        },
+        {
+          "id": "jain9",
+          "name": "Veg Biryani",
+          "description": "Aromatic basmati rice with mixed vegetables",
+          "price": 350,
+          "quantity": "2kg",
+          "category": "main_course",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/veg-biryani.jpg"
+        },
+        {
+          "id": "jain10",
+          "name": "Jeera Rice",
+          "description": "Cumin flavored basmati rice",
+          "price": 180,
+          "quantity": "2kg",
+          "category": "main_course",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/jeera-rice.jpg"
         }
       ]
     },
     {
-      "name": "Desserts",
+      "name": "Jain Breads",
       "items": [
         {
-          "id": "j7",
-          "name": "Gulab Jamun",
-          "description": "Soft milk dumplings in sugar syrup",
-          "price": 150,
+          "id": "jain11",
+          "name": "Tandoori Roti",
+          "description": "Traditional clay oven baked bread",
+          "price": 80,
+          "quantity": "20pc",
+          "category": "breads",
           "isJain": true,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/gulab-jamun.jpg"
+          "image": "/images/menu/butter-naan.jpg"
         },
         {
-          "id": "j8",
-          "name": "Rasmalai",
-          "description": "Cottage cheese dumplings in sweetened milk",
-          "price": 180,
+          "id": "jain12",
+          "name": "Butter Naan",
+          "description": "Soft leavened bread with butter",
+          "price": 120,
+          "quantity": "20pc",
+          "category": "breads",
           "isJain": true,
           "isVeg": true,
           "isNonVeg": false,
-          "image": "/images/rasmalai.jpg"
+          "image": "/images/menu/butter-naan.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Jain Desserts",
+      "items": [
+        {
+          "id": "jain13",
+          "name": "Gulab Jamun",
+          "description": "Soft milk dumplings in sugar syrup",
+          "price": 160,
+          "quantity": "40pc",
+          "category": "desserts",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/gulab-jamun.jpg"
+        },
+        {
+          "id": "jain14",
+          "name": "Mango Phirni",
+          "description": "Creamy rice pudding with mango flavor",
+          "price": 220,
+          "quantity": "2kg",
+          "category": "desserts",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/rasmalai.jpg"
+        }
+      ]
+    },
+    {
+      "name": "Jain Accompaniments",
+      "items": [
+        {
+          "id": "jain15",
+          "name": "Mixed Raita",
+          "description": "Fresh yogurt with cucumber, tomato and mint",
+          "price": 80,
+          "quantity": "1kg",
+          "category": "raita",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/default-food.jpg"
+        },
+        {
+          "id": "jain16",
+          "name": "Fresh Garden Salad",
+          "description": "Mixed fresh vegetables with lemon dressing",
+          "price": 60,
+          "quantity": "1kg",
+          "category": "salad",
+          "isJain": true,
+          "isVeg": true,
+          "isNonVeg": false,
+          "image": "/images/menu/default-food.jpg"
         }
       ]
     }

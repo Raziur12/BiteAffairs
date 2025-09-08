@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Box,
   Grid,
@@ -26,9 +26,44 @@ import {
   Circle
 } from '@mui/icons-material';
 
-const MenuDisplay = ({ menuData, dietaryFilter, searchQuery }) => {
+const MenuDisplay = ({ dietaryFilter, searchQuery }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [quantities, setQuantities] = useState({});
+  const [menuData, setMenuData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [imageErrors, setImageErrors] = useState({});
+
+  useEffect(() => {
+    loadMenuData();
+  }, [dietaryFilter]);
+
+  const loadMenuData = async () => {
+    setLoading(true);
+    try {
+      let data = {};
+      switch (dietaryFilter?.toLowerCase()) {
+        case 'jain':
+          data = await import('../data/jain-menu.json');
+          break;
+        case 'veg':
+          data = await import('../data/customized-menu.json');
+          break;
+        case 'non-veg':
+          data = await import('../data/customized-menu.json');
+          break;
+        case 'cocktail':
+          data = await import('../data/cocktail-party-menu.json');
+          break;
+        default:
+          data = await import('../data/jain-menu.json');
+      }
+      setMenuData(data.default || data);
+    } catch (error) {
+      console.error('Error loading menu data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Filter menu items based on dietary preference and search query
   const filteredItems = useMemo(() => {
@@ -43,10 +78,11 @@ const MenuDisplay = ({ menuData, dietaryFilter, searchQuery }) => {
 
     return items.filter(item => {
       // Dietary filter
-      const matchesDietary = dietaryFilter === 'all' || 
-        (dietaryFilter === 'jain' && item.isJain) ||
-        (dietaryFilter === 'veg' && item.isVeg && !item.isNonVeg) ||
-        (dietaryFilter === 'non-veg' && item.isNonVeg);
+      const matchesDietary = !dietaryFilter || dietaryFilter === 'all' || 
+        (dietaryFilter.toLowerCase() === 'jain' && item.isJain) ||
+        (dietaryFilter.toLowerCase() === 'veg' && item.isVeg && !item.isNonVeg) ||
+        (dietaryFilter.toLowerCase() === 'non-veg' && item.isNonVeg) ||
+        (dietaryFilter.toLowerCase() === 'vegan' && item.isVeg && !item.isNonVeg);
 
       // Search filter
       const matchesSearch = !searchQuery || 
@@ -86,6 +122,60 @@ const MenuDisplay = ({ menuData, dietaryFilter, searchQuery }) => {
     return 'default';
   };
 
+  const getItemImage = (imagePath, itemName) => {
+    // Primary: Use image path from JSON if provided
+    if (imagePath && imagePath.startsWith('/images/menu/')) {
+      return imagePath;
+    }
+    
+    // Fallback: Use local images from public/images/menu directory based on item name
+    const foodImages = {
+      'paneer': '/images/menu/paneer-tikka.jpg',
+      'tikka': '/images/menu/paneer-tikka.jpg',
+      'aloo': '/images/menu/aloo-tikki.jpg',
+      'dal': '/images/menu/dal-makhani.jpg',
+      'biryani': '/images/menu/veg-biryani.jpg',
+      'chicken': '/images/menu/chicken-curry.jpg',
+      'gulab': '/images/menu/gulab-jamun.jpg',
+      'samosa': '/images/menu/samosa.jpg',
+      'naan': '/images/menu/butter-naan.jpg',
+      'rice': '/images/menu/jeera-rice.jpg',
+      'butter': '/images/menu/paneer-butter-masala.jpg',
+      'masala': '/images/menu/paneer-butter-masala.jpg',
+      'curry': '/images/menu/chicken-curry.jpg',
+      'spring': '/images/menu/spring-rolls.jpg',
+      'rasmalai': '/images/menu/rasmalai.jpg',
+      'pakora': '/images/menu/paneer-pakora.jpg',
+      'rajma': '/images/menu/rajma.jpg',
+      'fish': '/images/menu/fish-curry.jpg',
+      'bruschetta': '/images/menu/bruschetta.jpg',
+      'canapes': '/images/menu/chicken-canapes.jpg',
+      'cheese': '/images/menu/cheese-board.jpg',
+      'mushrooms': '/images/menu/stuffed-mushrooms.jpg',
+      'quiches': '/images/menu/mini-quiches.jpg',
+      'prawn': '/images/menu/prawn-cocktail.jpg',
+      'dessert': '/images/menu/mini-desserts.jpg',
+      'chocolate': '/images/menu/chocolate-fountain.jpg',
+      'wings': '/images/menu/chicken-wings.jpg',
+      'package': '/images/menu/party-package.jpg'
+    };
+    
+    // Find matching image based on item name
+    const itemKey = Object.keys(foodImages).find(key => 
+      itemName.toLowerCase().includes(key)
+    );
+    
+    return itemKey ? foodImages[itemKey] : '/images/menu/default-food.jpg';
+  };
+
+  if (loading) {
+    return (
+      <Box sx={{ py: 4, textAlign: 'center' }}>
+        <Typography>Loading menu...</Typography>
+      </Box>
+    );
+  }
+
   if (!menuData || !menuData.categories) {
     return (
       <Alert severity="info" sx={{ mt: 4 }}>
@@ -121,15 +211,23 @@ const MenuDisplay = ({ menuData, dietaryFilter, searchQuery }) => {
               }}
               onClick={() => setSelectedItem(item)}
             >
-              {item.image && (
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={item.image}
-                  alt={item.name}
-                  sx={{ objectFit: 'cover' }}
-                />
-              )}
+              <CardMedia
+                component="img"
+                height="250"
+                image={item.image || getItemImage(item.image, item.name)}
+                alt={item.name}
+                sx={{ 
+                  objectFit: 'cover',
+                  width: '100%',
+                  maxWidth: '100%'
+                }}
+                onError={(e) => {
+                  if (!imageErrors[item.id]) {
+                    setImageErrors(prev => ({ ...prev, [item.id]: true }));
+                    e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80';
+                  }
+                }}
+              />
               
               <CardContent sx={{ flexGrow: 1, p: 2 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
@@ -229,20 +327,21 @@ const MenuDisplay = ({ menuData, dietaryFilter, searchQuery }) => {
             </DialogTitle>
             
             <DialogContent>
-              {selectedItem.image && (
-                <Box sx={{ mb: 3 }}>
-                  <img
-                    src={selectedItem.image}
-                    alt={selectedItem.name}
-                    style={{
-                      width: '100%',
-                      height: '300px',
-                      objectFit: 'cover',
-                      borderRadius: '8px'
-                    }}
-                  />
-                </Box>
-              )}
+              <Box sx={{ mb: 3 }}>
+                <img
+                  src={selectedItem.image || getItemImage(selectedItem.image, selectedItem.name)}
+                  alt={selectedItem.name}
+                  style={{
+                    width: '100%',
+                    height: '350px',
+                    objectFit: 'cover',
+                    borderRadius: '8px'
+                  }}
+                  onError={(e) => {
+                    e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80';
+                  }}
+                />
+              </Box>
               
               <Typography variant="body1" sx={{ mb: 2, lineHeight: 1.6 }}>
                 {selectedItem.description}

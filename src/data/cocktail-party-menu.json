@@ -1,101 +1,80 @@
 {
-  "title": "Cocktail Party Menu",
-  "description": "Elegant finger foods and appetizers for cocktail parties",
-  "categories": [
-    {
-      "name": "Canapés & Finger Foods",
-      "items": [
-        {
-          "id": "ck1",
-          "name": "Bruschetta Platter",
-          "description": "Toasted bread topped with tomatoes, herbs and cheese",
-          "price": 450,
-          "isJain": false,
-          "isVeg": true,
-          "isNonVeg": false,
-          "image": "/images/bruschetta.jpg"
-        },
-        {
-          "id": "ck2",
-          "name": "Chicken Canapés",
-          "description": "Bite-sized chicken appetizers with various toppings",
-          "price": 680,
-          "isJain": false,
-          "isVeg": false,
-          "isNonVeg": true,
-          "image": "/images/chicken-canapes.jpg"
-        },
-        {
-          "id": "ck3",
-          "name": "Cheese & Crackers Board",
-          "description": "Assorted cheese varieties with premium crackers",
-          "price": 850,
-          "isJain": false,
-          "isVeg": true,
-          "isNonVeg": false,
-          "image": "/images/cheese-board.jpg"
-        }
+  "COCKTAIL_PARTY_MENU": {
+    "veg_starters": [
+      {"id": "veg1", "name": "Paneer tikka", "description": "Grilled cottage cheese cubes with aromatic spices", "portion_size": "2PCS", "price": 80, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/paneer-tikka.jpg"},
+      {"id": "veg2", "name": "Haryali paneer tikka", "description": "Green herb marinated cottage cheese tikka", "portion_size": "2PCS", "price": 80, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/paneer-tikka.jpg"},
+      {"id": "veg3", "name": "Paneer malai tikka", "description": "Creamy cottage cheese tikka with malai marinade", "portion_size": "2PCS", "price": 110, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/paneer-tikka.jpg"},
+      {"id": "veg4", "name": "Kesariya paneer tikka", "description": "Saffron flavored cottage cheese tikka", "portion_size": "2PCS", "price": 100, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/paneer-tikka.jpg"},
+      {"id": "veg5", "name": "Chilli paneer Tikka", "description": "Spicy cottage cheese tikka with chili marinade", "portion_size": "2PCS", "price": 80, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/paneer-tikka.jpg"},
+      {"id": "veg6", "name": "Malai broccoli tikka", "description": "Creamy broccoli tikka with malai marinade", "portion_size": "2PCS", "price": 120, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "veg7", "name": "Tandoori aloo", "description": "Spiced potatoes grilled in tandoor", "portion_size": "2PCS", "price": 50, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/aloo-tikki.jpg"},
+      {"id": "veg8", "name": "Stuffed aloo tikka", "description": "Stuffed potato tikka with spiced filling", "portion_size": "2PCS", "price": 70, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/aloo-tikki.jpg"},
+      {"id": "veg9", "name": "Soya chaap tikka", "description": "Grilled soya chaap with aromatic spices", "portion_size": "2PCS", "price": 70, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "veg10", "name": "Malai Soya Tikka", "description": "Creamy soya tikka with malai marinade", "portion_size": "2PCS", "price": 80, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "veg11", "name": "Dry Manchurian", "description": "Crispy vegetable balls in dry Manchurian sauce", "portion_size": "2PCS", "price": 60, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "veg12", "name": "Chilli basil tofu", "description": "Spicy tofu with basil and chili flavors", "portion_size": "2PCS", "price": 70, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "veg13", "name": "Chili Paneer", "description": "Spicy cottage cheese with bell peppers", "portion_size": "2PCS", "price": 70, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/paneer-tikka.jpg"},
+      {"id": "veg14", "name": "Chilli mushroom", "description": "Spicy mushrooms with chili sauce", "portion_size": "2PCS", "price": 100, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "veg15", "name": "Veg shami kabab", "description": "Spiced vegetable patties with herbs", "portion_size": "2PCS", "price": 60, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "veg16", "name": "Hara Bhara Kabab", "description": "Green vegetable kababs with spinach and peas", "portion_size": "2PCS", "price": 50, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "veg17", "name": "Dahi ke shole", "description": "Yogurt based spiced patties", "portion_size": "2PCS", "price": 50, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "veg18", "name": "Dahi ke Kabab", "description": "Creamy yogurt kababs with herbs", "portion_size": "2PCS", "price": 80, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "veg19", "name": "Spring Rolls", "description": "Crispy rolls filled with fresh vegetables", "portion_size": "2PCS", "price": 80, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/spring-rolls.jpg"},
+      {"id": "veg20", "name": "Spicy veg (crystal dimsum)", "description": "Spicy vegetable crystal dumplings", "portion_size": "2PCS", "price": 120, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "veg21", "name": "Veg momo", "description": "Steamed vegetable dumplings", "portion_size": "2PCS", "price": 50, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "veg22", "name": "Paneer momo", "description": "Steamed cottage cheese dumplings", "portion_size": "2PCS", "price": 60, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "veg23", "name": "Cajun potato", "description": "Spiced potatoes with Cajun seasoning", "portion_size": "2PCS", "price": 50, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/aloo-tikki.jpg"},
+      {"id": "veg24", "name": "Honey chilli potato", "description": "Crispy potatoes tossed in honey chili sauce", "portion_size": "100 GM", "price": 50, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/aloo-tikki.jpg"},
+      {"id": "veg25", "name": "Cocktail samosa", "description": "Mini samosas perfect for cocktail parties", "portion_size": "2PCS", "price": 60, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/samosa.jpg"},
+      {"id": "veg26", "name": "Cottage cheese satay", "description": "Grilled cottage cheese skewers with satay sauce", "portion_size": "2PCS", "price": 70, "category": "starters", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/paneer-tikka.jpg"}
+    ],
+    "non_veg_starters": [
+      {"id": "nonveg1", "name": "Chicken Tikka", "description": "Grilled chicken pieces with aromatic spices", "portion_size": "2PCS", "price": 90, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/chicken-curry.jpg"},
+      {"id": "nonveg2", "name": "Haryali chicken tikka", "description": "Green herb marinated chicken tikka", "portion_size": "2PCS", "price": 90, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/chicken-curry.jpg"},
+      {"id": "nonveg3", "name": "Chicken Malai Tikka", "description": "Creamy chicken tikka with malai marinade", "portion_size": "2PCS", "price": 100, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/chicken-curry.jpg"},
+      {"id": "nonveg4", "name": "Chilli Chicken Tikka", "description": "Spicy chicken tikka with chili marinade", "portion_size": "2PCS", "price": 100, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/chicken-curry.jpg"},
+      {"id": "nonveg5", "name": "Anjeeri chicken tikka", "description": "Fig flavored chicken tikka with unique taste", "portion_size": "2PCS", "price": 120, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/chicken-curry.jpg"},
+      {"id": "nonveg6", "name": "Mutton seekh kabab", "description": "Spiced minced mutton grilled on skewers", "portion_size": "2PCS", "price": 130, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/default-food.jpg"},
+      {"id": "nonveg7", "name": "Chicken keema & pav", "description": "Spiced chicken mince served with bread rolls", "portion_size": "75 GM + 1.5 PC", "price": 190, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/chicken-curry.jpg"},
+      {"id": "nonveg8", "name": "Chicken seekh kabab", "description": "Spiced minced chicken grilled on skewers", "portion_size": "2PCS", "price": 120, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/chicken-curry.jpg"},
+      {"id": "nonveg9", "name": "BBQ Chicken wings", "description": "Barbecue grilled chicken wings", "portion_size": "2PCS", "price": 100, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/chicken-wings.jpg"},
+      {"id": "nonveg10", "name": "Thai chicken satay", "description": "Thai style chicken skewers with peanut sauce", "portion_size": "2PCS", "price": 120, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/chicken-curry.jpg"},
+      {"id": "nonveg11", "name": "Amritsari Fish Tikka", "description": "Amritsari style spiced fish tikka", "portion_size": "2PCS", "price": 130, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/fish-curry.jpg"},
+      {"id": "nonveg12", "name": "Tandoori Prawns", "description": "Tandoor grilled prawns with spices", "portion_size": "2PCS", "price": 130, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/default-food.jpg"},
+      {"id": "nonveg13", "name": "Chili Chicken", "description": "Spicy chicken with bell peppers and onions", "portion_size": "2PCS", "price": 90, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/chicken-curry.jpg"},
+      {"id": "nonveg14", "name": "Chicken fingers", "description": "Crispy chicken strips with seasoning", "portion_size": "2PCS", "price": 90, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/chicken-curry.jpg"},
+      {"id": "nonveg15", "name": "Kung pao chicken", "description": "Chinese style spicy chicken with peanuts", "portion_size": "2PCS", "price": 130, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/chicken-curry.jpg"},
+      {"id": "nonveg16", "name": "Fish fingers", "description": "Crispy fish strips with seasoning", "portion_size": "2PCS", "price": 100, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/fish-curry.jpg"},
+      {"id": "nonveg17", "name": "Fish Otak Otak", "description": "Southeast Asian spiced fish cake", "portion_size": "2PCS", "price": 140, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/fish-curry.jpg"},
+      {"id": "nonveg18", "name": "Chilli garlic prawns", "description": "Spicy prawns with chili and garlic", "portion_size": "2PCS", "price": 130, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/default-food.jpg"},
+      {"id": "nonveg19", "name": "Chilli oil (crystal Dimsums)", "description": "Spicy crystal dumplings with chili oil", "portion_size": "2PCS", "price": 120, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/default-food.jpg"},
+      {"id": "nonveg20", "name": "Chicken spring roll", "description": "Crispy rolls filled with spiced chicken", "portion_size": "2PCS", "price": 120, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/spring-rolls.jpg"},
+      {"id": "nonveg21", "name": "Chicken momos", "description": "Steamed chicken dumplings", "portion_size": "2PCS", "price": 70, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/default-food.jpg"},
+      {"id": "nonveg22", "name": "Chicken nuggets", "description": "Crispy chicken nuggets with seasoning", "portion_size": "2PCS", "price": 90, "category": "starters", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/chicken-curry.jpg"}
+    ],
+    "mains": {
+      "veg": [
+        {"id": "vegmain1", "name": "Dal Makhani", "description": "Rich and creamy black lentils cooked in butter", "portion_size": "100 GM", "price": 100, "category": "main_course", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/dal-makhani.jpg"},
+        {"id": "vegmain2", "name": "Dal tadka", "description": "Yellow lentils tempered with spices", "portion_size": "100 GM", "price": 90, "category": "main_course", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/dal-makhani.jpg"},
+        {"id": "vegmain3", "name": "Hakka Noodles", "description": "Stir-fried noodles with vegetables", "portion_size": "75 GM", "price": 70, "category": "main_course", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+        {"id": "vegmain4", "name": "Veggies in hot garlic", "description": "Mixed vegetables in spicy garlic sauce", "portion_size": "75 GM", "price": 100, "category": "main_course", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+        {"id": "vegmain5", "name": "Peas pulao", "description": "Aromatic rice with green peas", "portion_size": "100 GM", "price": 50, "category": "main_course", "isJain": true, "isVeg": true, "isNonVeg": false, "image": "/images/menu/jeera-rice.jpg"},
+        {"id": "vegmain6", "name": "Veg pulao", "description": "Aromatic rice with mixed vegetables", "portion_size": "100 GM", "price": 50, "category": "main_course", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/jeera-rice.jpg"},
+        {"id": "vegmain7", "name": "Veg biryani", "description": "Aromatic basmati rice with mixed vegetables", "portion_size": "100 GM", "price": 90, "category": "main_course", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/veg-biryani.jpg"}
+      ],
+      "non_veg": [
+        {"id": "nonvegmain1", "name": "Chicken Noodles", "description": "Stir-fried noodles with chicken", "portion_size": "75 GM", "price": 110, "category": "main_course", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/default-food.jpg"},
+        {"id": "nonvegmain2", "name": "Chicken biryani", "description": "Aromatic basmati rice with spiced chicken", "portion_size": "100 GM", "price": 120, "category": "main_course", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/veg-biryani.jpg"},
+        {"id": "nonvegmain3", "name": "Chicken fried rice", "description": "Wok-fried rice with chicken and vegetables", "portion_size": "100 GM", "price": 100, "category": "main_course", "isJain": false, "isVeg": false, "isNonVeg": true, "image": "/images/menu/jeera-rice.jpg"}
       ]
     },
-    {
-      "name": "Hot Appetizers",
-      "items": [
-        {
-          "id": "ck4",
-          "name": "Stuffed Mushrooms",
-          "description": "Button mushrooms stuffed with herbs and cheese",
-          "price": 520,
-          "isJain": false,
-          "isVeg": true,
-          "isNonVeg": false,
-          "image": "/images/stuffed-mushrooms.jpg"
-        },
-        {
-          "id": "ck5",
-          "name": "Mini Quiches",
-          "description": "Bite-sized quiches with various fillings",
-          "price": 480,
-          "isJain": false,
-          "isVeg": true,
-          "isNonVeg": false,
-          "image": "/images/mini-quiches.jpg"
-        },
-        {
-          "id": "ck6",
-          "name": "Prawn Cocktail",
-          "description": "Chilled prawns with cocktail sauce",
-          "price": 920,
-          "isJain": false,
-          "isVeg": false,
-          "isNonVeg": true,
-          "image": "/images/prawn-cocktail.jpg"
-        }
-      ]
-    },
-    {
-      "name": "Sweet Treats",
-      "items": [
-        {
-          "id": "ck7",
-          "name": "Mini Dessert Platter",
-          "description": "Assorted mini desserts and pastries",
-          "price": 650,
-          "isJain": false,
-          "isVeg": true,
-          "isNonVeg": false,
-          "image": "/images/mini-desserts.jpg"
-        },
-        {
-          "id": "ck8",
-          "name": "Chocolate Fountain",
-          "description": "Interactive chocolate fountain with fruits and treats",
-          "price": 1200,
-          "isJain": false,
-          "isVeg": true,
-          "isNonVeg": false,
-          "image": "/images/chocolate-fountain.jpg"
-        }
-      ]
-    }
-  ]
+    "desserts": [
+      {"id": "dessert1", "name": "Gulab Jamun", "description": "Soft milk dumplings in sugar syrup", "portion_size": "2 PC", "price": 60, "category": "desserts", "isJain": true, "isVeg": true, "isNonVeg": false, "image": "/images/menu/gulab-jamun.jpg"},
+      {"id": "dessert2", "name": "Brownies", "description": "Rich chocolate brownies", "portion_size": "1.5 PC", "price": 60, "category": "desserts", "isJain": false, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"},
+      {"id": "dessert3", "name": "Mango Phirni", "description": "Creamy rice pudding with mango flavor", "portion_size": "100 GM", "price": 60, "category": "desserts", "isJain": true, "isVeg": true, "isNonVeg": false, "image": "/images/menu/rasmalai.jpg"},
+      {"id": "dessert4", "name": "Rasgulla", "description": "Soft cottage cheese balls in sugar syrup", "portion_size": "2 PC", "price": 60, "category": "desserts", "isJain": true, "isVeg": true, "isNonVeg": false, "image": "/images/menu/gulab-jamun.jpg"},
+      {"id": "dessert5", "name": "Kheer", "description": "Traditional rice pudding with milk and nuts", "portion_size": "100 GM", "price": 60, "category": "desserts", "isJain": true, "isVeg": true, "isNonVeg": false, "image": "/images/menu/rasmalai.jpg"},
+      {"id": "dessert6", "name": "Moongdal halwa", "description": "Rich lentil dessert with ghee and nuts", "portion_size": "100 GM", "price": 60, "category": "desserts", "isJain": true, "isVeg": true, "isNonVeg": false, "image": "/images/menu/default-food.jpg"}
+    ]
+  }
 }
