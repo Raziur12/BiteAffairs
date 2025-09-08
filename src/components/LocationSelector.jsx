@@ -18,7 +18,12 @@ import {
   Close,
   LocationOn,
   CheckCircle,
-  Schedule
+  Schedule,
+  AccountBalance,
+  Business,
+  Engineering,
+  Factory,
+  Settings
 } from '@mui/icons-material';
 import { LOCATIONS, COMPANY_INFO } from '../utils/constants';
 
@@ -31,6 +36,17 @@ const LocationSelector = ({ open, onClose, selectedLocation, onLocationSelect })
       onLocationSelect(location);
       onClose();
     }
+  };
+
+  const getLocationIcon = (locationId) => {
+    const iconMap = {
+      'delhi': AccountBalance,
+      'gurugram': Business,
+      'noida': Engineering,
+      'faridabad': Factory,
+      'ghaziabad': Settings
+    };
+    return iconMap[locationId] || Business;
   };
 
   return (
@@ -50,39 +66,56 @@ const LocationSelector = ({ open, onClose, selectedLocation, onLocationSelect })
       {/* Header */}
       <DialogTitle
         sx={{
-          background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-          color: 'white',
+          background: 'white',
+          color: 'black',
           textAlign: 'center',
           position: 'relative',
-          py: 3
+          py: 4,
+          borderBottom: '1px solid #f0f0f0'
         }}
       >
         <IconButton
           onClick={onClose}
           sx={{
             position: 'absolute',
-            right: 8,
-            top: 8,
-            color: 'white'
+            right: 16,
+            top: 16,
+            color: 'gray'
           }}
         >
           <Close />
         </IconButton>
         
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
-          <Typography variant="h4" sx={{ fontWeight: 'bold', fontFamily: 'Playfair Display' }}>
-            🍽️ {COMPANY_INFO.NAME}
-          </Typography>
-          <Typography variant="h6" sx={{ opacity: 0.9 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.5 }}>
+          <Box sx={{
+            bgcolor: 'white',
+            borderRadius: 1,
+            p: 0.5,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            mb: 1
+          }}>
+            <img 
+              src="/logo/502068640_17845720176490350_3307957330610653706_n.jpg" 
+              alt="Bite Affair Logo" 
+              style={{
+                height: '120px',
+                width: 'auto',
+                objectFit: 'contain'
+              }}
+            />
+          </Box>
+          <Typography variant="h6" sx={{ color: 'black', fontWeight: 600 }}>
             Choose Your Location
           </Typography>
-          <Typography variant="body2" sx={{ opacity: 0.8 }}>
+          <Typography variant="body2" sx={{ color: 'gray', fontSize: '0.875rem' }}>
             Select a location to view available services
           </Typography>
         </Box>
       </DialogTitle>
 
-      <DialogContent sx={{ p: 3, bgcolor: 'grey.50' }}>
+      <DialogContent sx={{ p: 3, bgcolor: 'white', pt: 3 }}>
         <Grid container spacing={2}>
           {LOCATIONS.map((location) => (
             <Grid item xs={6} sm={4} key={location.id}>
@@ -92,21 +125,21 @@ const LocationSelector = ({ open, onClose, selectedLocation, onLocationSelect })
                   transition: 'all 0.3s ease',
                   opacity: location.available ? 1 : 0.6,
                   position: 'relative',
+                  border: selectedLocation?.id === location.id ? '2px solid #1976d2' : '1px solid #e0e0e0',
+                  borderRadius: 2,
+                  backgroundColor: selectedLocation?.id === location.id ? '#f3f7ff' : 'white',
                   '&:hover': location.available ? {
-                    transform: 'translateY(-4px)',
-                    boxShadow: theme.shadows[8]
-                  } : {},
-                  border: selectedLocation?.id === location.id ? 2 : 0,
-                  borderColor: selectedLocation?.id === location.id ? 'primary.main' : 'transparent'
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                  } : {}
                 }}
                 onClick={() => handleLocationSelect(location)}
               >
                 <CardContent
                   sx={{
                     textAlign: 'center',
-                    py: 3,
+                    py: 2.5,
                     px: 2,
-                    minHeight: 120,
+                    minHeight: 100,
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
@@ -115,39 +148,23 @@ const LocationSelector = ({ open, onClose, selectedLocation, onLocationSelect })
                   }}
                 >
                   {/* Location Icon */}
-                  <Typography variant="h2" sx={{ mb: 1 }}>
-                    {location.icon}
-                  </Typography>
+                  <Box sx={{ mb: 0.5, color: '#1976d2', display: 'flex', justifyContent: 'center' }}>
+                    {React.createElement(getLocationIcon(location.id), { 
+                      sx: { fontSize: 32 }
+                    })}
+                  </Box>
                   
                   {/* Location Name */}
                   <Typography
-                    variant="h6"
+                    variant="body2"
                     sx={{
-                      fontWeight: 'bold',
-                      color: location.available ? 'text.primary' : 'text.disabled'
+                      fontWeight: 600,
+                      color: location.available ? '#333' : 'text.disabled',
+                      fontSize: '0.8rem'
                     }}
                   >
                     {location.name}
                   </Typography>
-                  
-                  {/* Delivery Time / Status */}
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                    {location.available ? (
-                      <>
-                        <Schedule sx={{ fontSize: 16, color: 'success.main' }} />
-                        <Typography variant="caption" color="success.main" sx={{ fontWeight: 500 }}>
-                          {location.deliveryTime}
-                        </Typography>
-                      </>
-                    ) : (
-                      <Chip
-                        label={location.deliveryTime}
-                        size="small"
-                        color="default"
-                        variant="outlined"
-                      />
-                    )}
-                  </Box>
                   
                   {/* Selected Indicator */}
                   {selectedLocation?.id === location.id && (

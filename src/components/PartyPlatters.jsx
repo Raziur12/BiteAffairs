@@ -36,8 +36,13 @@ import {
   YouTube,
   WhatsApp
 } from '@mui/icons-material';
+import { useCart } from '../context/CartContext';
+import ItemCustomizationModal from './ItemCustomizationModal';
+import CartSummary from './CartSummary';
+import CartModal from './CartModal';
 
 const PartyPlatters = () => {
+  const { addItem, getItemQuantity, totalItems } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedMenu, setSelectedMenu] = useState('customized');
   const [sortBy, setSortBy] = useState('');
@@ -45,8 +50,9 @@ const PartyPlatters = () => {
   const [eventDate, setEventDate] = useState('');
   const [menuData, setMenuData] = useState({ categories: [] });
   const [loading, setLoading] = useState(false);
-  const [quantities, setQuantities] = useState({});
   const [selectedItem, setSelectedItem] = useState(null);
+  const [customizationModalOpen, setCustomizationModalOpen] = useState(false);
+  const [cartModalOpen, setCartModalOpen] = useState(false);
   const [imageErrors, setImageErrors] = useState({});
   const [vegFilter, setVegFilter] = useState(true);
   const [nonVegFilter, setNonVegFilter] = useState(true);
@@ -174,17 +180,15 @@ const PartyPlatters = () => {
     return matchesSearch && matchesDiet && matchesCategory;
   });
 
-  // Get total cart items
-  const getTotalCartItems = () => {
-    return Object.values(quantities).reduce((sum, qty) => sum + qty, 0);
+  // Handle adding item to cart
+  const handleAddToCart = (item) => {
+    setSelectedItem(item);
+    setCustomizationModalOpen(true);
   };
 
-  // Handle quantity changes
-  const updateQuantity = (itemId, change) => {
-    setQuantities(prev => ({
-      ...prev,
-      [itemId]: Math.max(0, (prev[itemId] || 0) + change)
-    }));
+  // Handle customized item addition
+  const handleCustomizedItemAdd = (customizedItem) => {
+    addItem(customizedItem);
   };
 
   // Get item image with fallback
@@ -556,7 +560,7 @@ const PartyPlatters = () => {
                         size="small"
                         onClick={(e) => {
                           e.stopPropagation();
-                          updateQuantity(item.id, 1);
+                          handleAddToCart(item);
                         }}
                         sx={{
                           bgcolor: '#1a237e',
@@ -574,31 +578,19 @@ const PartyPlatters = () => {
                       </Button>
                     </Box>
                     
-                    {quantities[item.id] > 0 && (
+                    {getItemQuantity(item.id) > 0 && (
                       <Box sx={{ mt: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-                        <IconButton
-                          size="small"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            updateQuantity(item.id, -1);
-                          }}
-                          sx={{ bgcolor: '#f5f5f5' }}
-                        >
-                          <Remove sx={{ fontSize: 16 }} />
-                        </IconButton>
-                        <Typography variant="body2" sx={{ minWidth: 20, textAlign: 'center', fontWeight: 600 }}>
-                          {quantities[item.id]}
+                        <Typography variant="body2" sx={{ 
+                          bgcolor: '#1a237e', 
+                          color: 'white', 
+                          px: 2, 
+                          py: 0.5, 
+                          borderRadius: 1,
+                          fontSize: '0.75rem',
+                          fontWeight: 600 
+                        }}>
+                          {getItemQuantity(item.id)} Added
                         </Typography>
-                        <IconButton
-                          size="small"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            updateQuantity(item.id, 1);
-                          }}
-                          sx={{ bgcolor: '#f5f5f5' }}
-                        >
-                          <Add sx={{ fontSize: 16 }} />
-                        </IconButton>
                       </Box>
                     )}
                   </CardContent>
@@ -620,111 +612,25 @@ const PartyPlatters = () => {
           </Box>
         )}
 
-        {/* Floating Cart Button */}
-        {getTotalCartItems() > 0 && (
-          <Box
-            sx={{
-              position: 'fixed',
-              bottom: 20,
-              right: 20,
-              zIndex: 1000
-            }}
-          >
-            <IconButton
-              sx={{
-                bgcolor: '#1a237e',
-                color: 'white',
-                width: 56,
-                height: 56,
-                '&:hover': {
-                  bgcolor: '#303f9f'
-                }
-              }}
-            >
-              <Badge badgeContent={getTotalCartItems()} color="error">
-                <ShoppingCart />
-              </Badge>
-            </IconButton>
-          </Box>
-        )}
+        {/* Cart Summary */}
+        <CartSummary onViewCart={() => setCartModalOpen(true)} />
 
-        {/* Item Detail Dialog */}
-        {selectedItem && (
-          <Dialog
-            open={Boolean(selectedItem)}
-            onClose={() => setSelectedItem(null)}
-            maxWidth="sm"
-            fullWidth
-          >
-            <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography variant="h6">{selectedItem.name}</Typography>
-              <IconButton onClick={() => setSelectedItem(null)}>
-                <Close />
-              </IconButton>
-            </DialogTitle>
-            <DialogContent>
-              <Box sx={{ mb: 2 }}>
-                <img
-                  src={getItemImage(selectedItem.image, selectedItem.name)}
-                  alt={selectedItem.name}
-                  style={{
-                    width: '100%',
-                    height: 200,
-                    objectFit: 'cover',
-                    borderRadius: 8
-                  }}
-                />
-              </Box>
-              
-              <Typography variant="body1" sx={{ mb: 2 }}>
-                {selectedItem.description}
-              </Typography>
-              
-              <Typography variant="h5" sx={{ mb: 2, color: '#1a237e', fontWeight: 'bold' }}>
-                ₹{selectedItem.price}
-              </Typography>
-              
-              {selectedItem.portion_size && (
-                <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-                  Portion Size: {selectedItem.portion_size}
-                </Typography>
-              )}
-              
-              <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
-                {selectedItem.isJain && (
-                  <Chip label="Jain" color="primary" size="small" />
-                )}
-                {selectedItem.isVeg && !selectedItem.isNonVeg && (
-                  <Chip label="Vegetarian" color="success" size="small" />
-                )}
-                {selectedItem.isNonVeg && (
-                  <Chip label="Non-Vegetarian" color="error" size="small" />
-                )}
-              </Box>
-              
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Typography variant="body1">Quantity:</Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <IconButton 
-                    color="primary"
-                    onClick={() => updateQuantity(selectedItem.id, -1)}
-                  >
-                    <Remove />
-                  </IconButton>
-                  <Typography variant="h6" sx={{ minWidth: 30, textAlign: 'center' }}>
-                    {quantities[selectedItem.id] || 0}
-                  </Typography>
-                  <IconButton 
-                    color="primary"
-                    onClick={() => updateQuantity(selectedItem.id, 1)}
-                  >
-                    <Add />
-                  </IconButton>
-                </Box>
-              </Box>
-            </DialogContent>
-          </Dialog>
-        )}
+        {/* Item Customization Modal */}
+        <ItemCustomizationModal
+          open={customizationModalOpen}
+          onClose={() => {
+            setCustomizationModalOpen(false);
+            setSelectedItem(null);
+          }}
+          item={selectedItem}
+          onAddToCart={handleCustomizedItemAdd}
+        />
+
+        {/* Cart Modal */}
+        <CartModal
+          open={cartModalOpen}
+          onClose={() => setCartModalOpen(false)}
+        />
 
 
       </Container>

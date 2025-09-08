@@ -7,6 +7,7 @@ import About from './components/About';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import { CartProvider } from './context/CartContext';
 import { menuService } from './services/menuService';
 import { MENU_TYPES } from './utils/constants';
 
@@ -18,19 +19,21 @@ const App = () => {
   const currentMenuData = menuService.getMenuData(selectedMenu);
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
-      <Navbar />
-      
-      <Box component="main">
-        <Hero />
-        <PartyPlatters />
-        <About />
-        <Testimonials />
-        <Contact />
+    <CartProvider>
+      <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+        <Navbar />
+        
+        <Box component="main">
+          <Hero />
+          <PartyPlatters />
+          <About />
+          <Testimonials />
+          <Contact />
+        </Box>
+        
+        <Footer />
       </Box>
-      
-      <Footer />
-    </Box>
+    </CartProvider>
   );
 };
 

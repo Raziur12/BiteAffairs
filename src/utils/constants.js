@@ -38,23 +38,23 @@ export const LOCATIONS = [
   {
     id: 'noida',
     name: 'Noida',
-    icon: '🏗️',
-    available: false,
-    deliveryTime: 'Coming Soon'
+    icon: '⚙️',
+    available: true,
+    deliveryTime: '50-65 mins'
   },
   {
     id: 'faridabad',
     name: 'Faridabad',
     icon: '🏭',
-    available: false,
-    deliveryTime: 'Coming Soon'
+    available: true,
+    deliveryTime: '40-55 mins'
   },
   {
     id: 'ghaziabad',
     name: 'Ghaziabad',
     icon: '⚙️',
-    available: false,
-    deliveryTime: 'Coming Soon'
+    available: true,
+    deliveryTime: '55-70 mins'
   }
 ];
 

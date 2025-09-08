@@ -30,6 +30,7 @@ import {
 } from '@mui/icons-material';
 import LocationSelector from './LocationSelector';
 import { locationService } from '../services/locationService';
+import { LOCATIONS } from '../utils/constants';
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -47,6 +48,14 @@ const Navbar = () => {
   const handleLocationSelect = (location) => {
     setSelectedLocation(location);
     locationService.saveLocation(location);
+  };
+
+  const handleLocationChange = (event) => {
+    const locationName = event.target.value;
+    const location = LOCATIONS.find(loc => loc.name === locationName);
+    if (location) {
+      handleLocationSelect(location);
+    }
   };
 
   const navItems = [
@@ -72,7 +81,7 @@ const Navbar = () => {
             src="/logo/502068640_17845720176490350_3307957330610653706_n.jpg" 
             alt="Bite Affair Logo" 
             style={{
-              height: '28px',
+              height: '140px',
               width: 'auto',
               objectFit: 'contain'
             }}
@@ -149,65 +158,43 @@ const Navbar = () => {
                   </Button>
                 ))}
                 
-                <FormControl size="small">
-                  <Select
-                    value={selectedLocation?.name || 'Gurugram'}
-                    sx={{
-                      color: 'white',
-                      fontSize: '0.9rem',
-                      '.MuiOutlinedInput-notchedOutline': {
-                        border: 'none'
-                      },
-                      '&:hover .MuiOutlinedInput-notchedOutline': {
-                        border: 'none'
-                      },
-                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                        border: 'none'
-                      },
-                      '.MuiSvgIcon-root': {
-                        color: 'white'
-                      }
-                    }}
-                    IconComponent={KeyboardArrowDown}
-                  >
-                    <MenuItem value="Gurugram">Gurugram</MenuItem>
-                    <MenuItem value="Delhi">Delhi</MenuItem>
-                    <MenuItem value="Noida">Noida</MenuItem>
-                  </Select>
-                </FormControl>
+                <Button
+                  onClick={() => setLocationSelectorOpen(true)}
+                  sx={{
+                    color: 'white',
+                    fontSize: '0.9rem',
+                    textTransform: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 0.5,
+                    '&:hover': { bgcolor: 'rgba(255,255,255,0.1)' }
+                  }}
+                >
+                  {selectedLocation?.name || 'Gurugram'}
+                  <KeyboardArrowDown />
+                </Button>
               </Box>
             )}
 
             {/* Mobile - Center Location and Right Menu */}
             {isMobile && (
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flex: 1, justifyContent: 'flex-end' }}>
-                <FormControl size="small">
-                  <Select
-                    value={selectedLocation?.name || 'Gurugram'}
-                    sx={{
-                      color: 'white',
-                      fontSize: '0.85rem',
-                      minWidth: '90px',
-                      '.MuiOutlinedInput-notchedOutline': {
-                        border: 'none'
-                      },
-                      '&:hover .MuiOutlinedInput-notchedOutline': {
-                        border: 'none'
-                      },
-                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                        border: 'none'
-                      },
-                      '.MuiSvgIcon-root': {
-                        color: 'white'
-                      }
-                    }}
-                    IconComponent={KeyboardArrowDown}
-                  >
-                    <MenuItem value="Gurugram">Gurugram</MenuItem>
-                    <MenuItem value="Delhi">Delhi</MenuItem>
-                    <MenuItem value="Noida">Noida</MenuItem>
-                  </Select>
-                </FormControl>
+                <Button
+                  onClick={() => setLocationSelectorOpen(true)}
+                  sx={{
+                    color: 'white',
+                    fontSize: '0.85rem',
+                    textTransform: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 0.5,
+                    minWidth: '90px',
+                    '&:hover': { bgcolor: 'rgba(255,255,255,0.1)' }
+                  }}
+                >
+                  {selectedLocation?.name || 'Gurugram'}
+                  <KeyboardArrowDown />
+                </Button>
 
                 <IconButton
                   color="inherit"
