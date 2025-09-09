@@ -49,7 +49,7 @@ const Footer = () => {
         pb: 3
       }}
     >
-      <Container maxWidth="xl" sx={{ px: { xs: 0.5, sm: 3 } }}>
+      <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 4 }, ml: { xs: 1, sm: 2 } }}>
         <Grid container spacing={4}>
           {/* Company Info */}
           <Grid item xs={12} md={4}>

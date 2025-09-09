@@ -34,7 +34,9 @@ import {
   Phone,
   Instagram,
   YouTube,
-  WhatsApp
+  WhatsApp,
+  ChevronLeft,
+  ChevronRight
 } from '@mui/icons-material';
 import { useCart } from '../../context/CartContext';
 import ItemCustomizationModal from './ItemCustomizationModal';
@@ -59,6 +61,7 @@ const PartyPlatters = ({ id }) => {
   const [vegFilter, setVegFilter] = useState(true);
   const [nonVegFilter, setNonVegFilter] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
 
   const menuOptions = [
     { value: 'jain', label: 'Jain Menu' },
@@ -218,6 +221,15 @@ const PartyPlatters = ({ id }) => {
     addItem(customizedItem);
   };
 
+  // Navigation functions for service cards
+  const handlePrevService = () => {
+    setCurrentServiceIndex((prev) => (prev > 0 ? prev - 1 : services.length - 1));
+  };
+
+  const handleNextService = () => {
+    setCurrentServiceIndex((prev) => (prev < services.length - 1 ? prev + 1 : 0));
+  };
+
   // Get item image with fallback
   const getItemImage = (imagePath, itemName) => {
     // Use online images since local images are not available
@@ -268,14 +280,48 @@ const PartyPlatters = ({ id }) => {
       title: 'Professional Chefs',
       description: 'Experienced chefs who specialize in authentic Indian cuisine with modern presentation.',
       image: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      price: '₹500'
+      price: '₹500',
+      rating: 4.8
     },
     {
       id: 2,
       title: 'Serving Staff',
       description: 'Well-trained serving staff to ensure your guests receive excellent hospitality.',
       image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      price: '₹300'
+      price: '₹300',
+      rating: 4.9
+    },
+    {
+      id: 3,
+      title: 'Professional Bartender',
+      description: 'Expert bartenders who can craft signature cocktails and manage your bar service.',
+      image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      price: '₹400',
+      rating: 4.7
+    },
+    {
+      id: 4,
+      title: 'Event Coordinator',
+      description: 'Professional event coordinators to manage your party timeline and logistics.',
+      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      price: '₹600',
+      rating: 4.9
+    },
+    {
+      id: 5,
+      title: 'Kitchen Helper',
+      description: 'Skilled kitchen assistants to support food preparation and service.',
+      image: 'https://images.unsplash.com/photo-1581299894007-aaa50297cf16?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      price: '₹250',
+      rating: 4.6
+    },
+    {
+      id: 6,
+      title: 'Cleanup Crew',
+      description: 'Professional cleanup team to handle post-event cleaning and organization.',
+      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      price: '₹200',
+      rating: 4.5
     }
   ];
 
@@ -819,6 +865,238 @@ const PartyPlatters = ({ id }) => {
             </Typography>
           </Box>
         )}
+
+        {/* Bespoke Services Section */}
+        <Box 
+          sx={{ 
+            mt: 6, 
+            mb: 4,
+            py: 6,
+            px: 3,
+            backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            borderRadius: 3,
+            position: 'relative'
+          }}
+        >
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 'bold',
+              color: 'white',
+              mb: 1,
+              textAlign: 'center'
+            }}
+          >
+            Bespoke Services
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              color: 'rgba(255, 255, 255, 0.9)',
+              textAlign: 'center',
+              mb: 4,
+              maxWidth: '600px',
+              mx: 'auto',
+              lineHeight: 1.6
+            }}
+          >
+            Bite Affair offers professional, well-trained party waiters, bartenders, and bespoke services staff to 
+            elevate your specific party needs and guarantee seamless service that matches the energy and elegance of your gathering.
+          </Typography>
+
+          <Box sx={{ position: 'relative', px: { xs: 2, sm: 6 } }}>
+            {/* Left Arrow Button */}
+            <IconButton
+              onClick={handlePrevService}
+              sx={{
+                position: 'absolute',
+                left: { xs: -10, sm: 0 },
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 2,
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                color: '#1a237e',
+                width: { xs: 32, sm: 40 },
+                height: { xs: 32, sm: 40 },
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 1)',
+                  transform: 'translateY(-50%) scale(1.1)',
+                },
+                boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              <ChevronLeft sx={{ fontSize: { xs: 20, sm: 24 } }} />
+            </IconButton>
+
+            {/* Right Arrow Button */}
+            <IconButton
+              onClick={handleNextService}
+              sx={{
+                position: 'absolute',
+                right: { xs: -10, sm: 0 },
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 2,
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                color: '#1a237e',
+                width: { xs: 32, sm: 40 },
+                height: { xs: 32, sm: 40 },
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 1)',
+                  transform: 'translateY(-50%) scale(1.1)',
+                },
+                boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              <ChevronRight sx={{ fontSize: { xs: 20, sm: 24 } }} />
+            </IconButton>
+
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 3,
+                overflowX: 'hidden',
+                pb: 2,
+                position: 'relative'
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 3,
+                  transform: `translateX(-${currentServiceIndex * 300}px)`,
+                  transition: 'transform 0.3s ease-in-out',
+                }}
+              >
+                {services.map((service) => (
+                  <Card
+                    key={service.id}
+                    sx={{
+                      minWidth: 280,
+                      maxWidth: 280,
+                      height: 'auto',
+                      borderRadius: 3,
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+                      transition: 'all 0.3s ease',
+                      flexShrink: 0,
+                      '&:hover': {
+                        transform: 'translateY(-4px)',
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.15)'
+                      }
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      image={service.image}
+                      alt={service.title}
+                      sx={{ 
+                        height: 180,
+                        objectFit: 'cover'
+                      }}
+                    />
+                    <CardContent sx={{ p: 3 }}>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontWeight: 'bold',
+                          mb: 1,
+                          color: '#1a237e',
+                          fontSize: '1.1rem'
+                        }}
+                      >
+                        {service.title}
+                      </Typography>
+                      
+                      {/* Rating */}
+                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                        <Box sx={{ display: 'flex', mr: 1 }}>
+                          {[...Array(5)].map((_, i) => (
+                            <Typography
+                              key={i}
+                              sx={{
+                                color: i < Math.floor(service.rating) ? '#ffc107' : '#e0e0e0',
+                                fontSize: '1rem'
+                              }}
+                            >
+                              ★
+                            </Typography>
+                          ))}
+                        </Box>
+                        <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.875rem' }}>
+                          {service.rating}
+                        </Typography>
+                      </Box>
+                      
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ mb: 3, lineHeight: 1.5, fontSize: '0.875rem' }}
+                      >
+                        {service.description}
+                      </Typography>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            fontWeight: 'bold',
+                            color: '#1a237e',
+                            fontSize: '1rem'
+                          }}
+                        >
+                          Starting {service.price}
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          sx={{
+                            bgcolor: '#1976d2',
+                            color: 'white',
+                            borderRadius: '20px',
+                            px: 2.5,
+                            py: 0.5,
+                            fontSize: '0.875rem',
+                            '&:hover': {
+                              bgcolor: '#1565c0'
+                            }
+                          }}
+                        >
+                          Add
+                        </Button>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                ))}
+              </Box>
+            </Box>
+          </Box>
+
+          {/* Dot Navigation */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3, gap: 1 }}>
+            {services.map((_, index) => (
+              <Box
+                key={index}
+                onClick={() => setCurrentServiceIndex(index)}
+                sx={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: '50%',
+                  backgroundColor: currentServiceIndex === index ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0.4)',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                    transform: 'scale(1.2)'
+                  }
+                }}
+              />
+            ))}
+          </Box>
+        </Box>
 
         {/* Cart Summary */}
         <CartSummary onViewCart={() => setCartModalOpen(true)} />
