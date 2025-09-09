@@ -7,6 +7,15 @@ import {
 } from '@mui/material';
 
 const Hero = () => {
+  const handleBuildOrder = () => {
+    const menuSection = document.getElementById('menu');
+    if (menuSection) {
+      menuSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
 
   return (
     <>
@@ -55,7 +64,7 @@ const Hero = () => {
               fontWeight: 'bold',
               mb: 2,
               textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-              fontSize: { xs: '2.5rem', md: '3.5rem' }
+              fontSize: '2rem'
             }}
           >
             Hosting Party??
@@ -77,14 +86,15 @@ const Hero = () => {
           <Button
             variant="outlined"
             size="large"
+            onClick={handleBuildOrder}
             sx={{
               color: 'white',
               borderColor: 'white',
               px: 4,
               py: 2,
               fontSize: '1.1rem',
-              fontWeight: 'bold',
-              borderRadius: 2,
+              fontWeight: 'normal',
+              borderRadius: '20px',
               textTransform: 'none',
               borderWidth: 2,
               '&:hover': {

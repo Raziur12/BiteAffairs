@@ -104,7 +104,8 @@ const Contact = () => {
             sx={{
               fontWeight: 'bold',
               color: 'text.primary',
-              mb: 2
+              mb: 2,
+              fontSize: '2rem'
             }}
           >
             Get In Touch
@@ -146,6 +147,7 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
+                      aria-label="Enter your full name"
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -156,6 +158,7 @@ const Contact = () => {
                       value={formData.phone}
                       onChange={handleInputChange}
                       required
+                      aria-label="Enter your phone number"
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -167,6 +170,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
+                      aria-label="Enter your email address"
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -178,6 +182,7 @@ const Contact = () => {
                       onChange={handleInputChange}
                       placeholder="Birthday, Wedding, Corporate, etc."
                       required
+                      aria-label="Enter your event type"
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -192,6 +197,7 @@ const Contact = () => {
                         shrink: true,
                       }}
                       required
+                      aria-label="Select your event date"
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -204,6 +210,7 @@ const Contact = () => {
                       onChange={handleInputChange}
                       placeholder="Approximate number of guests"
                       required
+                      aria-label="Enter approximate number of guests"
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -216,6 +223,7 @@ const Contact = () => {
                       value={formData.message}
                       onChange={handleInputChange}
                       placeholder="Tell us about your dietary preferences, special requirements, or any other details..."
+                      aria-label="Enter additional requirements or special requests"
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -225,6 +233,7 @@ const Contact = () => {
                       size="large"
                       startIcon={<Send />}
                       sx={{ px: 4, py: 2 }}
+                      aria-label="Submit inquiry form"
                     >
                       Send Inquiry
                     </Button>
@@ -313,6 +322,7 @@ const Contact = () => {
                     href="tel:+919211570030"
                     fullWidth
                     sx={{ mb: 2 }}
+                    aria-label="Call us at +91 92115 70030"
                   >
                     Call +91 92115 70030
                   </Button>
@@ -331,6 +341,7 @@ const Contact = () => {
                         bgcolor: 'rgba(37, 211, 102, 0.1)'
                       }
                     }}
+                    aria-label="Contact us via WhatsApp"
                   >
                     WhatsApp Us
                   </Button>

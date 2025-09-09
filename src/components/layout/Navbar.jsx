@@ -106,17 +106,18 @@ const Navbar = () => {
     <>
       {/* Main navbar */}
       <AppBar 
-        position="sticky" 
+        position="fixed" 
         sx={{ 
           bgcolor: '#1e3a8a',
           color: 'white',
           boxShadow: '0 2px 20px rgba(0,0,0,0.2)',
           width: '100%',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          zIndex: 1100
         }}
       >
         <Container maxWidth="xl" sx={{ px: { xs: 0.5, sm: 3 }, width: '100%', maxWidth: '100%' }}>
-          <Toolbar sx={{ justifyContent: 'space-between', py: 1, minHeight: '64px', px: 0, width: '100%' }}>
+          <Toolbar sx={{ justifyContent: 'space-between', py: 0.5, minHeight: '48px', px: 0, width: '100%' }}>
             {/* Logo */}
             <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
               <Box sx={{
@@ -131,9 +132,10 @@ const Navbar = () => {
                   src="/logo/502068640_17845720176490350_3307957330610653706_n.jpg" 
                   alt="Bite Affair Logo" 
                   style={{
-                    height: '32px',
+                    height: '28px',
                     width: 'auto',
-                    objectFit: 'contain'
+                    objectFit: 'contain',
+                    objectPosition: 'center'
                   }}
                 />
               </Box>
@@ -147,6 +149,7 @@ const Navbar = () => {
                     key={item.label}
                     color="inherit"
                     href={item.href}
+                    aria-label={`Navigate to ${item.label} section`}
                     sx={{ 
                       color: 'white',
                       fontWeight: 500,
@@ -160,6 +163,7 @@ const Navbar = () => {
                 
                 <Button
                   onClick={() => setLocationSelectorOpen(true)}
+                  aria-label={`Current location: ${selectedLocation?.name || 'Gurugram'}. Click to change location`}
                   sx={{
                     color: 'white',
                     fontSize: '0.9rem',
@@ -198,9 +202,10 @@ const Navbar = () => {
 
                 <IconButton
                   color="inherit"
-                  aria-label="open drawer"
+                  aria-label="Open navigation menu"
+                  edge="start"
                   onClick={handleDrawerToggle}
-                  sx={{ p: 1 }}
+                  sx={{ mr: 2, display: { md: 'none' } }}
                 >
                   <MenuIcon />
                 </IconButton>
@@ -216,7 +221,12 @@ const Navbar = () => {
           bgcolor: 'white', 
           color: '#1e3a8a',
           py: 1,
-          borderBottom: '1px solid #e0e0e0'
+          borderBottom: '1px solid #e0e0e0',
+          position: 'fixed',
+          top: '48px',
+          left: 0,
+          right: 0,
+          zIndex: 1099
         }}>
           <Container maxWidth="xl" sx={{ px: { xs: 0.5, sm: 3 } }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

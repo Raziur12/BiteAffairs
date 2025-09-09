@@ -71,12 +71,13 @@ const CartModal = ({ open, onClose }) => {
     <Dialog
       open={open}
       onClose={onClose}
-      maxWidth="md"
-      fullWidth
+      maxWidth={false}
       PaperProps={{
         sx: {
           borderRadius: 3,
-          maxHeight: '90vh'
+          maxHeight: '60vh',
+          maxWidth: '400px',
+          width: '90%'
         }
       }}
     >
@@ -213,7 +214,7 @@ const CartModal = ({ open, onClose }) => {
             variant="contained"
             sx={{
               bgcolor: '#1a237e',
-              py: 1.5,
+              py: 1,
               fontSize: '1rem',
               fontWeight: 600,
               '&:hover': {

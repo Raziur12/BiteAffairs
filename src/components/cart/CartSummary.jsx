@@ -18,22 +18,27 @@ const CartSummary = ({ onViewCart }) => {
       <Paper
         sx={{
           position: 'fixed',
-          bottom: 20,
-          left: '50%',
-          transform: 'translateX(-50%)',
+          bottom: { xs: 0, md: 20 },
+          left: { xs: 0, md: '50%' },
+          right: { xs: 0, md: 'auto' },
+          transform: { xs: 'none', md: 'translateX(-50%)' },
           zIndex: 1000,
           bgcolor: '#1a237e',
           color: 'white',
-          px: 3,
-          py: 2,
-          borderRadius: 3,
-          minWidth: 200,
+          px: { xs: 2, md: 3 },
+          py: { xs: 1.5, md: 2 },
+          borderRadius: { xs: 0, md: 3 },
+          minWidth: { xs: 'auto', md: 200 },
           textAlign: 'center',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
+          boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexDirection: { xs: 'row', md: 'column' }
         }}
       >
         <Typography variant="body2" sx={{ mb: 1, fontWeight: 500 }}>
-          {totalItems} Item{totalItems > 1 ? 's' : ''} Added
+          {totalItems} Item{totalItems !== 1 ? 's' : ''} Added
         </Typography>
         <Button
           variant="contained"
@@ -43,7 +48,7 @@ const CartSummary = ({ onViewCart }) => {
             color: '#1a237e',
             fontWeight: 600,
             px: 3,
-            py: 0.5,
+            py: 1,
             '&:hover': {
               bgcolor: '#f5f5f5'
             }

@@ -49,22 +49,30 @@ const Footer = () => {
         pb: 3
       }}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{ px: { xs: 0.5, sm: 3 } }}>
         <Grid container spacing={4}>
           {/* Company Info */}
           <Grid item xs={12} md={4}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
-              <Restaurant sx={{ color: 'primary.main', fontSize: 32 }} />
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 'bold',
-                  color: 'primary.main',
-                  fontFamily: 'Playfair Display'
-                }}
-              >
-                Bite Affair
-              </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+              <Box sx={{
+                bgcolor: 'white',
+                borderRadius: 1,
+                p: 0.5,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <img 
+                  src="/logo/502068640_17845720176490350_3307957330610653706_n.jpg" 
+                  alt="Bite Affair Logo" 
+                  style={{
+                    height: '40px',
+                    width: 'auto',
+                    objectFit: 'contain',
+                    objectPosition: 'center'
+                  }}
+                />
+              </Box>
             </Box>
             
             <Typography variant="body1" sx={{ mb: 3, lineHeight: 1.6, color: 'grey.300' }}>

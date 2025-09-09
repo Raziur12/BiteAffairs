@@ -78,7 +78,8 @@ const Testimonials = () => {
             sx={{
               fontWeight: 'bold',
               color: 'text.primary',
-              mb: 2
+              mb: 2,
+              fontSize: '2rem'
             }}
           >
             What Our Customers Say

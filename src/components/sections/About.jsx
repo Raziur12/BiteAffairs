@@ -70,9 +70,10 @@ const About = () => {
           <Typography
             variant="h2"
             sx={{
-              fontWeight: 'bold',
+              fontWeight: 'normal',
               color: 'text.primary',
-              mb: 2
+              mb: 2,
+              fontSize: '2rem'
             }}
           >
             About Bite Affair
@@ -99,7 +100,7 @@ const About = () => {
                 <Typography
                   variant="h3"
                   sx={{
-                    fontWeight: 'bold',
+                    fontWeight: 'normal',
                     color: 'primary.main',
                     mb: 1
                   }}
@@ -141,7 +142,7 @@ const About = () => {
                   >
                     {feature.icon}
                   </Avatar>
-                  <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 2 }}>
+                  <Typography variant="h5" sx={{ fontWeight: 'normal', mb: 2 }}>
                     {feature.title}
                   </Typography>
                   <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.6 }}>
@@ -157,7 +158,7 @@ const About = () => {
         <Grid container spacing={6}>
           <Grid item xs={12} md={6}>
             <Card sx={{ p: 4, height: '100%' }}>
-              <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 3, color: 'primary.main' }}>
+              <Typography variant="h4" sx={{ fontWeight: 'normal', mb: 3, color: 'primary.main' }}>
                 Our Services
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -173,14 +174,14 @@ const About = () => {
 
           <Grid item xs={12} md={6}>
             <Card sx={{ p: 4, height: '100%', bgcolor: 'primary.50' }}>
-              <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 3, color: 'primary.main' }}>
+              <Typography variant="h4" sx={{ fontWeight: 'normal', mb: 3, color: 'primary.main' }}>
                 Why Choose Us?
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   <Schedule sx={{ color: 'primary.main', fontSize: 24 }} />
                   <Box>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 'normal' }}>
                       On-Time Delivery
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -192,7 +193,7 @@ const About = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   <LocationOn sx={{ color: 'primary.main', fontSize: 24 }} />
                   <Box>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 'normal' }}>
                       Gurugram Coverage
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -204,7 +205,7 @@ const About = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   <Phone sx={{ color: 'primary.main', fontSize: 24 }} />
                   <Box>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 'normal' }}>
                       24/7 Support
                     </Typography>
                     <Typography variant="body2" color="text.secondary">

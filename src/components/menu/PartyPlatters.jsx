@@ -39,6 +39,7 @@ import {
 import { useCart } from '../../context/CartContext';
 import ItemCustomizationModal from './ItemCustomizationModal';
 import { CartSummary, CartModal } from '../cart';
+import { MenuGridSkeleton, EnhancedLoader, MenuLoadError, EmptyState } from '../common';
 
 const PartyPlatters = ({ id }) => {
   const { addItem, getItemQuantity, totalItems } = useCart();
@@ -49,6 +50,7 @@ const PartyPlatters = ({ id }) => {
   const [eventDate, setEventDate] = useState('');
   const [menuData, setMenuData] = useState({ categories: [] });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [customizationModalOpen, setCustomizationModalOpen] = useState(false);
   const [cartModalOpen, setCartModalOpen] = useState(false);
@@ -74,6 +76,7 @@ const PartyPlatters = ({ id }) => {
   // Load menu data dynamically
   const loadMenuData = async () => {
     setLoading(true);
+    setError(null);
     try {
       let data = {};
       switch (selectedMenu?.toLowerCase()) {
@@ -95,6 +98,7 @@ const PartyPlatters = ({ id }) => {
       setMenuData(data.default || data);
     } catch (error) {
       console.error('Error loading menu data:', error);
+      setError(error.message || 'Failed to load menu data');
     } finally {
       setLoading(false);
     }
@@ -277,9 +281,9 @@ const PartyPlatters = ({ id }) => {
   ];
 
   return (
-    <Box id={id} sx={{ bgcolor: '#f5f5f5', minHeight: '100vh' }}>
+    <Box id={id} sx={{ bgcolor: '#f5f5f5', minHeight: '100vh', width: '100%', overflowX: 'hidden' }}>
 
-      <Container maxWidth="lg" sx={{ py: 2 }}>
+      <Container maxWidth="lg" sx={{ py: 2, px: { xs: 1, sm: 2 }, width: '100%', maxWidth: '100%' }}>
         {/* Choose Your Party Platters Title */}
         <Box sx={{ textAlign: 'center', mb: 3 }}>
           <Typography
@@ -425,19 +429,43 @@ const PartyPlatters = ({ id }) => {
           </IconButton>
         </Box>
 
-        {/* Loading State */}
-        {loading && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
-            <CircularProgress />
-          </Box>
+        {/* Error State */}
+        {error && (
+          <MenuLoadError 
+            onRetry={loadMenuData}
+            menuType={selectedMenu}
+          />
+        )}
+
+        {/* Enhanced Loading State */}
+        {loading && !error && (
+          <MenuGridSkeleton count={8} />
+        )}
+
+        {/* Empty State */}
+        {!loading && !error && filteredItems.length === 0 && (
+          <EmptyState
+            title="No items found"
+            message="Try adjusting your search filters or select a different menu type."
+          />
         )}
 
         {/* Menu Items Grid */}
-        {!loading && (
-          <Grid container spacing={2}>
+        {!loading && !error && filteredItems.length > 0 && (
+          <Grid container spacing={2} sx={{ width: '100%', margin: 0 }}>
             {filteredItems.map((item) => (
-              <Grid item xs={6} sm={6} md={4} lg={3} key={item.id}>
+              <Grid item xs={6} sm={4} md={3} lg={3} key={item.id}>
                 <Card
+                  tabIndex={0}
+                  className="menu-item-card"
+                  role="button"
+                  aria-label={`${item.name} - ${item.description} - ₹${item.price}`}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleAddToCart(item);
+                    }
+                  }}
                   sx={{
                     height: '100%',
                     borderRadius: 2,
@@ -447,6 +475,8 @@ const PartyPlatters = ({ id }) => {
                     position: 'relative',
                     display: 'flex',
                     flexDirection: 'column',
+                    width: '100%',
+                    maxWidth: '100%',
                     '&:hover': {
                       transform: 'translateY(-4px)',
                       boxShadow: '0 4px 16px rgba(0,0,0,0.15)'
@@ -557,19 +587,26 @@ const PartyPlatters = ({ id }) => {
                       <Button
                         variant="contained"
                         size="small"
+                        startIcon={<Add />}
                         onClick={(e) => {
                           e.stopPropagation();
                           handleAddToCart(item);
                         }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleAddToCart(item);
+                          }
+                        }}
+                        aria-label={`Add ${item.name} to cart`}
                         sx={{
-                          bgcolor: '#1a237e',
-                          borderRadius: 1,
-                          px: 2,
-                          py: 0.5,
-                          fontSize: '0.75rem',
-                          textTransform: 'none',
+                          bgcolor: '#1976d2',
+                          color: 'white',
+                          fontWeight: 'normal',
+                          borderRadius: '20px',
                           '&:hover': {
-                            bgcolor: '#303f9f'
+                            bgcolor: '#1565c0'
                           }
                         }}
                       >

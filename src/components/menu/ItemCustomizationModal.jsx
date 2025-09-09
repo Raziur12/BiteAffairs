@@ -147,12 +147,13 @@ const ItemCustomizationModal = ({
     <Dialog
       open={open}
       onClose={onClose}
-      maxWidth="sm"
-      fullWidth
+      maxWidth={false}
       PaperProps={{
         sx: {
           borderRadius: 3,
-          maxHeight: '90vh'
+          maxHeight: '60vh',
+          maxWidth: '400px',
+          width: '90%'
         }
       }}
     >
@@ -164,8 +165,8 @@ const ItemCustomizationModal = ({
               src={getItemImage(item.image, item.name)}
               alt={item.name}
               sx={{
-                width: 60,
-                height: 60,
+                width: 90,
+                height: 90,
                 borderRadius: 2,
                 objectFit: 'cover'
               }}
@@ -347,7 +348,7 @@ const ItemCustomizationModal = ({
           onClick={handleAddToCart}
           sx={{
             bgcolor: '#1a237e',
-            py: 1.5,
+            py: 1,
             fontSize: '1rem',
             fontWeight: 600,
             '&:hover': {
