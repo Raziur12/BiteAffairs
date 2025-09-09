@@ -46,6 +46,7 @@ const PartyPlatters = ({ id }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedMenu, setSelectedMenu] = useState('customized');
   const [sortBy, setSortBy] = useState('');
+  const [numberOfPax, setNumberOfPax] = useState('');
   const [location, setLocation] = useState('');
   const [eventDate, setEventDate] = useState('');
   const [menuData, setMenuData] = useState({ categories: [] });
@@ -147,41 +148,64 @@ const PartyPlatters = ({ id }) => {
     return categories;
   };
 
-  // Filter items based on search query, dietary preferences, and category
-  const filteredItems = getAllItems().filter(item => {
-    if (!item) return false;
-    
-    const matchesSearch = searchQuery === '' || 
-                         (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-                         (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase()));
-    
-    // More flexible diet filtering
-    const matchesDiet = (!vegFilter && !nonVegFilter) || 
-                       (vegFilter && item.isVeg) || 
-                       (nonVegFilter && item.isNonVeg) ||
-                       (vegFilter && !item.isNonVeg) || // If not explicitly non-veg, consider as veg option
-                       (nonVegFilter && !item.isVeg); // If not explicitly veg, consider as non-veg option
-    
-    // More flexible category matching
-    const matchesCategory = !selectedCategory || selectedCategory === 'All' ||
-                           (selectedCategory === 'Starters' && 
-                            (item.category === 'starters' || 
-                             (item.name && (item.name.toLowerCase().includes('tikka') || 
-                                          item.name.toLowerCase().includes('kabab') ||
-                                          item.name.toLowerCase().includes('starter'))))) ||
-                           (selectedCategory === 'Breads' && 
-                            (item.category === 'breads' || 
-                             (item.name && (item.name.toLowerCase().includes('naan') || 
-                                          item.name.toLowerCase().includes('roti') ||
-                                          item.name.toLowerCase().includes('bread'))))) ||
-                           (selectedCategory === 'Desserts' && 
-                            (item.category === 'desserts' || 
-                             (item.name && (item.name.toLowerCase().includes('jamun') || 
-                                          item.name.toLowerCase().includes('phirni') ||
-                                          item.name.toLowerCase().includes('dessert')))));
-    
-    return matchesSearch && matchesDiet && matchesCategory;
-  });
+  // Filter and sort items based on search query, dietary preferences, category, and sorting
+  const filteredAndSortedItems = (() => {
+    // First filter items
+    const filtered = getAllItems().filter(item => {
+      if (!item) return false;
+      
+      const matchesSearch = searchQuery === '' || 
+                           (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                           (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase()));
+      
+      // More flexible diet filtering
+      const matchesDiet = (!vegFilter && !nonVegFilter) || 
+                         (vegFilter && item.isVeg) || 
+                         (nonVegFilter && item.isNonVeg) ||
+                         (vegFilter && !item.isNonVeg) || // If not explicitly non-veg, consider as veg option
+                         (nonVegFilter && !item.isVeg); // If not explicitly veg, consider as non-veg option
+      
+      // More flexible category matching
+      const matchesCategory = !selectedCategory || selectedCategory === 'All' ||
+                             (selectedCategory === 'Starters' && 
+                              (item.category === 'starters' || 
+                               (item.name && (item.name.toLowerCase().includes('tikka') || 
+                                            item.name.toLowerCase().includes('kabab') ||
+                                            item.name.toLowerCase().includes('starter'))))) ||
+                             (selectedCategory === 'Breads' && 
+                              (item.category === 'breads' || 
+                               (item.name && (item.name.toLowerCase().includes('naan') || 
+                                            item.name.toLowerCase().includes('roti') ||
+                                            item.name.toLowerCase().includes('bread'))))) ||
+                             (selectedCategory === 'Desserts' && 
+                              (item.category === 'desserts' || 
+                               (item.name && (item.name.toLowerCase().includes('jamun') || 
+                                            item.name.toLowerCase().includes('phirni') ||
+                                            item.name.toLowerCase().includes('dessert')))));
+      
+      return matchesSearch && matchesDiet && matchesCategory;
+    });
+
+    // Then sort items based on sortBy value
+    if (!sortBy || sortBy === '') return filtered;
+
+    return [...filtered].sort((a, b) => {
+      const priceA = parseFloat(a.price) || 0;
+      const priceB = parseFloat(b.price) || 0;
+
+      switch (sortBy) {
+        case 'price-low':
+          return priceA - priceB;
+        case 'price-high':
+          return priceB - priceA;
+        case 'popular':
+          // Sort by name alphabetically as a proxy for popularity
+          return (a.name || '').localeCompare(b.name || '');
+        default:
+          return 0;
+      }
+    });
+  })();
 
   // Handle adding item to cart
   const handleAddToCart = (item) => {
@@ -298,10 +322,10 @@ const PartyPlatters = ({ id }) => {
           </Typography>
         </Box>
 
-        {/* Search Bar */}
-        <Box sx={{ mb: 2 }}>
+        {/* Search Bar and Menu Dropdown in Same Row */}
+        <Box sx={{ mb: 2, display: 'flex', gap: 1, flexDirection: { xs: 'column', sm: 'row' } }}>
           <TextField
-            fullWidth
+            size="small"
             placeholder="Search for Dishes/Services"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -313,27 +337,43 @@ const PartyPlatters = ({ id }) => {
               ),
             }}
             sx={{ 
+              flex: { xs: 1, sm: 2 },
               bgcolor: 'white', 
-              borderRadius: 2,
               '& .MuiOutlinedInput-root': {
-                borderRadius: 2
+                borderRadius: '25px',
+                border: '1px solid #e0e0e0',
+                '&:hover': {
+                  border: '1px solid #bdbdbd'
+                },
+                '&.Mui-focused': {
+                  border: '1px solid #1976d2'
+                }
               }
             }}
           />
-        </Box>
-
-        {/* Menu Dropdown */}
-        <Box sx={{ mb: 2 }}>
-          <FormControl fullWidth size="small">
+          <FormControl size="small" sx={{ flex: { xs: 1, sm: 1 }, minWidth: { xs: 'auto', sm: 150 } }}>
             <Select
               value={selectedMenu}
               onChange={(e) => setSelectedMenu(e.target.value)}
               displayEmpty
               sx={{ 
-                bgcolor: 'white', 
-                borderRadius: 2,
+                bgcolor: 'white',
+                borderRadius: '25px',
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2
+                  borderRadius: '25px !important',
+                  border: '1px solid #e0e0e0',
+                  '&:hover': {
+                    border: '1px solid #bdbdbd'
+                  },
+                  '&.Mui-focused': {
+                    border: '1px solid #1976d2'
+                  }
+                },
+                '& .MuiSelect-select': {
+                  borderRadius: '25px'
+                },
+                '& fieldset': {
+                  borderRadius: '25px !important'
                 }
               }}
             >
@@ -372,61 +412,193 @@ const PartyPlatters = ({ id }) => {
           </Box>
         </Box>
 
-        {/* All Controls in One Row */}
-        <Box sx={{ mb: 3, display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap', justifyContent: 'flex-start' }}>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={vegFilter}
-                onChange={(e) => setVegFilter(e.target.checked)}
-                color="success"
-                size="small"
-              />
-            }
-            label="Veg"
-            sx={{ 
-              '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 },
-              mr: 1
-            }}
-          />
-          <FormControlLabel
-            control={
-              <Switch
-                checked={nonVegFilter}
-                onChange={(e) => setNonVegFilter(e.target.checked)}
-                color="error"
-                size="small"
-              />
-            }
-            label="Non Veg"
-            sx={{ 
-              '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 },
-              mr: 2
-            }}
-          />
-          <FormControl size="small" sx={{ minWidth: 90, mr: 1 }}>
-            <Select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              displayEmpty
+        {/* Controls Layout - Responsive */}
+        <Box sx={{ mb: 3 }}>
+          {/* Mobile Layout - All controls in one row */}
+          <Box sx={{ 
+            display: { xs: 'flex', md: 'none' }, 
+            alignItems: 'center', 
+            gap: 1, 
+            flexWrap: 'wrap', 
+            justifyContent: 'flex-start' 
+          }}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={vegFilter}
+                  onChange={(e) => setVegFilter(e.target.checked)}
+                  color="success"
+                  size="small"
+                />
+              }
+              label="Veg"
               sx={{ 
-                bgcolor: 'white', 
-                borderRadius: 1,
-                fontSize: '0.75rem',
-                height: 32
+                '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 },
+                mr: 1
               }}
-            >
-              {sortOptions.map((option) => (
-                <MenuItem key={option.value} value={option.value} sx={{ fontSize: '0.75rem' }}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Typography variant="body2" sx={{ fontSize: '0.75rem', mr: 0.5 }}>No of Pax</Typography>
-          <IconButton size="small" sx={{ p: 0.5 }}>
-            <FilterList sx={{ fontSize: 16 }} />
-          </IconButton>
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={nonVegFilter}
+                  onChange={(e) => setNonVegFilter(e.target.checked)}
+                  color="error"
+                  size="small"
+                />
+              }
+              label="Non Veg"
+              sx={{ 
+                '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 },
+                mr: 2
+              }}
+            />
+            <FormControl size="small" sx={{ minWidth: 90, mr: 1 }}>
+              <Select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                displayEmpty
+                sx={{ 
+                  bgcolor: 'white', 
+                  borderRadius: '20px',
+                  fontSize: '0.75rem',
+                  height: 32,
+                  border: '1px solid #e0e0e0',
+                  '&:hover': {
+                    border: '1px solid #bdbdbd'
+                  },
+                  '&.Mui-focused': {
+                    border: '1px solid #1976d2'
+                  }
+                }}
+              >
+                {sortOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value} sx={{ fontSize: '0.75rem' }}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <TextField
+              size="small"
+              placeholder="No. of Pax"
+              value={numberOfPax}
+              onChange={(e) => setNumberOfPax(e.target.value)}
+              type="number"
+              inputProps={{ min: 1, max: 1000 }}
+              sx={{ 
+                width: 100,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '20px',
+                  height: 32,
+                  fontSize: '0.75rem',
+                  border: '1px solid #e0e0e0',
+                  '&:hover': {
+                    border: '1px solid #bdbdbd'
+                  },
+                  '&.Mui-focused': {
+                    border: '1px solid #1976d2'
+                  }
+                },
+                '& .MuiOutlinedInput-input': {
+                  fontSize: '0.75rem',
+                  padding: '6px 12px'
+                }
+              }}
+            />
+          </Box>
+
+          {/* Desktop Layout - Split controls */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'space-between', alignItems: 'center' }}>
+            {/* Left side - Veg/Non-Veg filters */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={vegFilter}
+                    onChange={(e) => setVegFilter(e.target.checked)}
+                    color="success"
+                    size="small"
+                  />
+                }
+                label="Veg"
+                sx={{ 
+                  '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 },
+                  mr: 1
+                }}
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={nonVegFilter}
+                    onChange={(e) => setNonVegFilter(e.target.checked)}
+                    color="error"
+                    size="small"
+                  />
+                }
+                label="Non Veg"
+                sx={{ 
+                  '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 }
+                }}
+              />
+            </Box>
+
+            {/* Right side - Sort By and No of Pax */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <FormControl size="small" sx={{ minWidth: 120 }}>
+                <Select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  displayEmpty
+                  sx={{ 
+                    bgcolor: 'white', 
+                    borderRadius: '20px',
+                    fontSize: '0.75rem',
+                    height: 32,
+                    border: '1px solid #e0e0e0',
+                    '&:hover': {
+                      border: '1px solid #bdbdbd'
+                    },
+                    '&.Mui-focused': {
+                      border: '1px solid #1976d2'
+                    }
+                  }}
+                >
+                  {sortOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value} sx={{ fontSize: '0.75rem' }}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <TextField
+                size="small"
+                placeholder="No. of Pax"
+                value={numberOfPax}
+                onChange={(e) => setNumberOfPax(e.target.value)}
+                type="number"
+                inputProps={{ min: 1, max: 1000 }}
+                sx={{ 
+                  width: 100,
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '20px',
+                    height: 32,
+                    fontSize: '0.75rem',
+                    border: '1px solid #e0e0e0',
+                    '&:hover': {
+                      border: '1px solid #bdbdbd'
+                    },
+                    '&.Mui-focused': {
+                      border: '1px solid #1976d2'
+                    }
+                  },
+                  '& .MuiOutlinedInput-input': {
+                    fontSize: '0.75rem',
+                    padding: '6px 12px'
+                  }
+                }}
+              />
+            </Box>
+          </Box>
         </Box>
 
         {/* Error State */}
@@ -443,7 +615,7 @@ const PartyPlatters = ({ id }) => {
         )}
 
         {/* Empty State */}
-        {!loading && !error && filteredItems.length === 0 && (
+        {!loading && !error && filteredAndSortedItems.length === 0 && (
           <EmptyState
             title="No items found"
             message="Try adjusting your search filters or select a different menu type."
@@ -451,9 +623,9 @@ const PartyPlatters = ({ id }) => {
         )}
 
         {/* Menu Items Grid */}
-        {!loading && !error && filteredItems.length > 0 && (
+        {!loading && !error && filteredAndSortedItems.length > 0 && (
           <Grid container spacing={2} sx={{ width: '100%', margin: 0 }}>
-            {filteredItems.map((item) => (
+            {filteredAndSortedItems.map((item) => (
               <Grid item xs={6} sm={4} md={3} lg={3} key={item.id}>
                 <Card
                   tabIndex={0}
@@ -637,7 +809,7 @@ const PartyPlatters = ({ id }) => {
         )}
 
         {/* Empty State */}
-        {!loading && filteredItems.length === 0 && (
+        {!loading && filteredAndSortedItems.length === 0 && (
           <Box sx={{ textAlign: 'center', py: 8 }}>
             <Typography variant="h6" color="text.secondary">
               No items found matching your criteria
