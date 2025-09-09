@@ -6,7 +6,7 @@ import {
   Slide,
   Paper
 } from '@mui/material';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../../context/CartContext';
 
 const CartSummary = ({ onViewCart }) => {
   const { totalItems } = useCart();

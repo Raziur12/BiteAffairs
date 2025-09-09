@@ -25,7 +25,7 @@ import {
   Factory,
   Settings
 } from '@mui/icons-material';
-import { LOCATIONS, COMPANY_INFO } from '../utils/constants';
+import { LOCATIONS, COMPANY_INFO } from "../../utils/constants";
 
 const LocationSelector = ({ open, onClose, selectedLocation, onLocationSelect }) => {
   const theme = useTheme();

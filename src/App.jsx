@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Container } from '@mui/material';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import PartyPlatters from './components/PartyPlatters';
-import About from './components/About';
-import Testimonials from './components/Testimonials';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
+import { Navbar, Hero, Footer } from './components/layout';
+import { PartyPlatters } from './components/menu';
+import { About, Contact, Testimonials } from './components/sections';
 import { CartProvider } from './context/CartContext';
 import { menuService } from './services/menuService';
 import { MENU_TYPES } from './utils/constants';
@@ -25,7 +21,7 @@ const App = () => {
         
         <Box component="main">
           <Hero />
-          <PartyPlatters />
+          <PartyPlatters id="menu" />
           <About />
           <Testimonials />
           <Contact />

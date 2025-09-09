@@ -103,3 +103,11 @@ temp/
 *.njsproj
 *.sln
 *.sw?
+
+# Design files and documentation
+Bite Affair/
+Bite Affair (1)/
+PROJECT_ANALYSIS_REPORT.md
+
+# Design assets (PNG files in root)
+*.png

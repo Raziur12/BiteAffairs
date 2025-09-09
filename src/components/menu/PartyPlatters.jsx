@@ -36,12 +36,11 @@ import {
   YouTube,
   WhatsApp
 } from '@mui/icons-material';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../../context/CartContext';
 import ItemCustomizationModal from './ItemCustomizationModal';
-import CartSummary from './CartSummary';
-import CartModal from './CartModal';
+import { CartSummary, CartModal } from '../cart';
 
-const PartyPlatters = () => {
+const PartyPlatters = ({ id }) => {
   const { addItem, getItemQuantity, totalItems } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedMenu, setSelectedMenu] = useState('customized');
@@ -79,19 +78,19 @@ const PartyPlatters = () => {
       let data = {};
       switch (selectedMenu?.toLowerCase()) {
         case 'jain':
-          data = await import('../data/jain-menu.json');
+          data = await import('../../data/jain-menu.json');
           break;
         case 'customized':
-          data = await import('../data/customized-menu.json');
+          data = await import('../../data/customized-menu.json');
           break;
         case 'cocktail':
-          data = await import('../data/cocktail-party-menu.json');
+          data = await import('../../data/cocktail-party-menu.json');
           break;
         case 'packages':
-          data = await import('../data/packages-menu.json');
+          data = await import('../../data/packages-menu.json');
           break;
         default:
-          data = await import('../data/jain-menu.json');
+          data = await import('../../data/jain-menu.json');
       }
       setMenuData(data.default || data);
     } catch (error) {
@@ -278,7 +277,7 @@ const PartyPlatters = () => {
   ];
 
   return (
-    <Box sx={{ bgcolor: '#f5f5f5', minHeight: '100vh' }}>
+    <Box id={id} sx={{ bgcolor: '#f5f5f5', minHeight: '100vh' }}>
 
       <Container maxWidth="lg" sx={{ py: 2 }}>
         {/* Choose Your Party Platters Title */}

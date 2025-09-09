@@ -28,9 +28,9 @@ import {
   YouTube,
   WhatsApp
 } from '@mui/icons-material';
-import LocationSelector from './LocationSelector';
-import { locationService } from '../services/locationService';
-import { LOCATIONS } from '../utils/constants';
+import LocationSelector from '../common/LocationSelector';
+import { locationService } from '../../services/locationService';
+import { LOCATIONS } from '../../utils/constants';
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);

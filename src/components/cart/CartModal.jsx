@@ -21,7 +21,7 @@ import {
   Remove,
   Delete
 } from '@mui/icons-material';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../../context/CartContext';
 
 const CartModal = ({ open, onClose }) => {
   const { items, totalItems, updateQuantity, removeItem, getTotalPrice, clearCart } = useCart();

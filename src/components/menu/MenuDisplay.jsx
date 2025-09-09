@@ -43,19 +43,19 @@ const MenuDisplay = ({ dietaryFilter, searchQuery }) => {
       let data = {};
       switch (dietaryFilter?.toLowerCase()) {
         case 'jain':
-          data = await import('../data/jain-menu.json');
+          data = await import('../../data/jain-menu.json');
           break;
         case 'veg':
-          data = await import('../data/customized-menu.json');
+          data = await import('../../data/customized-menu.json');
           break;
         case 'non-veg':
-          data = await import('../data/customized-menu.json');
+          data = await import('../../data/customized-menu.json');
           break;
         case 'cocktail':
-          data = await import('../data/cocktail-party-menu.json');
+          data = await import('../../data/cocktail-party-menu.json');
           break;
         default:
-          data = await import('../data/jain-menu.json');
+          data = await import('../../data/jain-menu.json');
       }
       setMenuData(data.default || data);
     } catch (error) {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useCart } from '../../context/CartContext';
 import {
   Dialog,
   DialogTitle,
