@@ -6,7 +6,7 @@ import {
   Button
 } from '@mui/material';
 
-const Hero = () => {
+const Hero = ({ onStartBooking }) => {
   const handleBuildOrder = () => {
     const menuSection = document.getElementById('menu');
     if (menuSection) {
@@ -82,7 +82,6 @@ const Hero = () => {
           >
             Wow them with this party platter
           </Typography>
-          
           <Button
             variant="outlined"
             size="large"
