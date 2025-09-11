@@ -41,11 +41,8 @@ function CustomStepIcon(props) {
 
 const BookingStepper = ({ activeStep, steps }) => {
   return (
-    <Box sx={{ p: { xs: 2, sm: 3 }, textAlign: 'center', bgcolor: 'grey.50' }}>
+    <Box sx={{ p: { xs: 2, sm: 3 }, textAlign: 'center', bgcolor: 'white' }}>
        <Box sx={{
-          bgcolor: 'white',
-          borderRadius: 1,
-          p: 1,
           display: 'inline-flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -55,7 +52,7 @@ const BookingStepper = ({ activeStep, steps }) => {
             src="/logo/502068640_17845720176490350_3307957330610653706_n.jpg" 
             alt="Bite Affair Logo" 
             style={{
-              height: '40px',
+              height: '140px',
               width: 'auto',
               objectFit: 'contain'
             }}

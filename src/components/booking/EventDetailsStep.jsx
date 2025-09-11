@@ -8,8 +8,11 @@ import {
   MenuItem, 
   InputLabel, 
   IconButton, 
-  Button 
+  Button, 
+  TextField 
 } from '@mui/material';
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Add, Remove, LocationOn, Event, AccessTime, Restaurant } from '@mui/icons-material';
 
 const EventDetailsStep = ({ onNext, updateBookingData }) => {
@@ -83,22 +86,6 @@ const EventDetailsStep = ({ onNext, updateBookingData }) => {
   };
 
   // Generate date options (next 30 days)
-  const generateDateOptions = () => {
-    const dates = [];
-    const today = new Date();
-    for (let i = 0; i < 30; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      const dateString = date.toISOString().split('T')[0];
-      const displayDate = date.toLocaleDateString('en-US', { 
-        weekday: 'short', 
-        month: 'short', 
-        day: 'numeric' 
-      });
-      dates.push({ value: dateString, label: displayDate });
-    }
-    return dates;
-  };
 
   return (
     <Box sx={{ textAlign: 'center', px: 2 }}>
@@ -169,23 +156,14 @@ const EventDetailsStep = ({ onNext, updateBookingData }) => {
               Event Date
             </Typography>
           </Box>
-          <FormControl fullWidth size="small">
-            <Select
-              value={formData.eventDate}
-              onChange={(e) => handleInputChange('eventDate', e.target.value)}
-              displayEmpty
-              sx={{ textAlign: 'left' }}
-            >
-              <MenuItem value="" disabled>
-                Select a Date
-              </MenuItem>
-              {generateDateOptions().map((date) => (
-                <MenuItem key={date.value} value={date.value}>
-                  {date.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              value={formData.eventDate ? new Date(formData.eventDate) : null}
+              onChange={(newValue) => handleInputChange('eventDate', newValue ? newValue.toISOString().split('T')[0] : '')}
+              slotProps={{ textField: { size: 'small', fullWidth: true } }}
+              disablePast
+            />
+          </LocalizationProvider>
         </Grid>
 
         {/* Delivery Time */}
