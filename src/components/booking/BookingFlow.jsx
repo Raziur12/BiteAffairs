@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BookingWizard from './BookingWizard';
 import BookingWizardOption2 from './BookingWizardOption2';
 
-const BookingFlow = ({ onComplete }) => {
+const BookingFlow = ({ onComplete, onLocationSelect }) => {
   const [currentStep, setCurrentStep] = useState('wizard1'); // 'wizard1' or 'wizard2'
   const [initialData, setInitialData] = useState(null);
 
@@ -19,7 +19,7 @@ const BookingFlow = ({ onComplete }) => {
   };
 
   if (currentStep === 'wizard1') {
-    return <BookingWizard onComplete={handleWizard1Complete} />;
+    return <BookingWizard onComplete={handleWizard1Complete} onLocationSelect={onLocationSelect} />;
   }
 
   return <BookingWizardOption2 initialData={initialData} onComplete={handleWizard2Complete} />;

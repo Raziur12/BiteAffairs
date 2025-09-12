@@ -12,9 +12,9 @@ import { menuService } from './services/menuService';
 import { MENU_TYPES } from './utils/constants';
 import BookingFlow from './components/booking/BookingFlow';
 
-const HomePage = ({ bookingConfig }) => (
+const HomePage = ({ bookingConfig, selectedLocation }) => (
   <>
-    <Navbar />
+    <Navbar selectedLocation={selectedLocation} />
     <Box component="main" sx={{ paddingTop: { xs: '92px', md: '48px' } }}>
       <Hero />
       <MenuErrorBoundary>
@@ -32,11 +32,16 @@ const HomePage = ({ bookingConfig }) => (
 
 const App = () => {
   const [bookingConfig, setBookingConfig] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedMenu, setSelectedMenu] = useState(MENU_TYPES.JAIN);
   const [dietaryFilter, setDietaryFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
   const navigate = useNavigate();
+
+  const handleLocationSelect = (location) => {
+    setSelectedLocation(location);
+  };
 
   const handleBookingComplete = (config) => {
     setBookingConfig(config);
@@ -71,8 +76,8 @@ const App = () => {
       <CartProvider>
         <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', width: '100%', overflowX: 'hidden' }}>
           <Routes>
-            <Route path="/" element={<BookingFlow onComplete={handleBookingComplete} />} />
-            <Route path="/home" element={<HomePage bookingConfig={bookingConfig} />} />
+            <Route path="/" element={<BookingFlow onComplete={handleBookingComplete} onLocationSelect={handleLocationSelect} />} />
+            <Route path="/home" element={<HomePage bookingConfig={bookingConfig} selectedLocation={selectedLocation} />} />
           </Routes>
         </Box>
       </CartProvider>

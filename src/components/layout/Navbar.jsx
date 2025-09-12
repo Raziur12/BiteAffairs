@@ -13,30 +13,25 @@ import {
   useTheme,
   useMediaQuery,
   Container,
-  Select,
-  MenuItem,
-  FormControl
 } from '@mui/material';
 import {
   Menu as MenuIcon,
   Phone,
-  LocationOn,
-  Restaurant,
   KeyboardArrowDown,
   Facebook,
   Instagram,
   YouTube,
   WhatsApp
 } from '@mui/icons-material';
-import LocationSelector from '../common/LocationSelector';
 import { locationService } from '../../services/locationService';
 import { LOCATIONS } from '../../utils/constants';
 
-const Navbar = () => {
+
+const Navbar = ({ selectedLocation: locationFromApp }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [locationSelectorOpen, setLocationSelectorOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(() => 
-    locationService.getSavedLocation() || locationService.getDefaultLocation()
+    locationFromApp || locationService.getSavedLocation() || locationService.getDefaultLocation()
   );
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -163,7 +158,7 @@ const Navbar = () => {
                 
                 <Button
                   onClick={() => setLocationSelectorOpen(true)}
-                  aria-label={`Current location: ${selectedLocation?.name || 'Gurugram'}. Click to change location`}
+                  aria-label={`Current location: ${locationFromApp || selectedLocation?.name || 'Gurugram'}. Click to change location`}
                   sx={{
                     color: 'white',
                     fontSize: '0.9rem',
@@ -174,8 +169,8 @@ const Navbar = () => {
                     '&:hover': { bgcolor: 'rgba(255,255,255,0.1)' }
                   }}
                 >
-                  {selectedLocation?.name || 'Gurugram'}
-                  <KeyboardArrowDown />
+                  {locationFromApp || selectedLocation?.name || 'Gurugram'}
+                  
                 </Button>
               </Box>
             )}
@@ -196,7 +191,7 @@ const Navbar = () => {
                     '&:hover': { bgcolor: 'rgba(255,255,255,0.1)' }
                   }}
                 >
-                  {selectedLocation?.name || 'Gurugram'}
+                  {locationFromApp || selectedLocation?.name || 'Gurugram'}
                   <KeyboardArrowDown />
                 </Button>
 
@@ -264,12 +259,7 @@ const Navbar = () => {
       </Drawer>
 
       {/* Location Selector Modal */}
-      <LocationSelector
-        open={locationSelectorOpen}
-        onClose={() => setLocationSelectorOpen(false)}
-        selectedLocation={selectedLocation}
-        onLocationSelect={handleLocationSelect}
-      />
+      
     </>
   );
 };

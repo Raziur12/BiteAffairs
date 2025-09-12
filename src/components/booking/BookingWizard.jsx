@@ -6,7 +6,7 @@ import LocationStep from './LocationStep';
 import OccasionStep from './OccasionStep';
 import MealTypeStep from './MealTypeStep';
 
-const BookingWizard = ({ onComplete }) => {
+const BookingWizard = ({ onComplete, onLocationSelect }) => {
   const [activeStep, setActiveStep] = useState(0);
   const wizardSteps = ['Choose Location', 'Choose Occasion', 'Meal Type'];
   const [bookingData, setBookingData] = useState({
@@ -38,7 +38,7 @@ const BookingWizard = ({ onComplete }) => {
   const steps = [
     {
       label: 'Select Event',
-      component: <LocationStep onNext={handleNext} updateBookingData={updateBookingData} />,
+      component: <LocationStep onNext={handleNext} updateBookingData={updateBookingData} onLocationSelect={onLocationSelect} />,
     },
     {
       label: 'Select Menu',

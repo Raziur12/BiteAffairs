@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { Box, Typography, Grid, Card, CardActionArea, CardContent } from '@mui/material';
 import { locationService } from '../../services/locationService';
 
-const LocationStep = ({ onNext, updateBookingData }) => {
+const LocationStep = ({ onNext, updateBookingData, onLocationSelect }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const locations = locationService.getAvailableLocations();
 
   const handleLocationSelect = (location) => {
     setSelectedLocation(location.id);
     updateBookingData({ location: location.name });
+    if (onLocationSelect) {
+      onLocationSelect(location.name);
+    }
     // Automatically move to the next step after a short delay
     setTimeout(() => {
       onNext();
