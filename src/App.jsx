@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box } from '@mui/material';
@@ -11,24 +11,93 @@ import { CartProvider } from './context/CartContext';
 import { menuService } from './services/menuService';
 import { MENU_TYPES } from './utils/constants';
 import BookingFlow from './components/booking/BookingFlow';
+import PaymentPage from './components/booking/PaymentPage';
+import CartModal from './components/cart/CartModal';
+import CheckoutConfirmation from './components/cart/CheckoutConfirmation';
+import OrderFlowManager from './components/order/OrderFlowManager';
 
-const HomePage = ({ bookingConfig, selectedLocation }) => (
-  <>
-    <Navbar selectedLocation={selectedLocation} />
-    <Box component="main" sx={{ paddingTop: { xs: '92px', md: '48px' } }}>
-      <Hero />
-      <MenuErrorBoundary>
-        <PartyPlatters id="menu" bookingConfig={bookingConfig} />
-      </MenuErrorBoundary>
-      <About />
-      <Testimonials />
-      <FormErrorBoundary>
-        <Contact />
-      </FormErrorBoundary>
-    </Box>
-    <Footer />
-  </>
-);
+const HomePage = ({ bookingConfig, selectedLocation }) => {
+  const [cartOpen, setCartOpen] = useState(false);
+  const location = useLocation();
+
+  // Scroll to section based on URL
+  React.useEffect(() => {
+    const scrollToSection = () => {
+      const path = location.pathname;
+      let sectionId = '';
+      
+      if (path.includes('/menu')) {
+        sectionId = 'menu';
+      } else if (path.includes('/about')) {
+        sectionId = 'about';
+      } else if (path.includes('/testimonials')) {
+        sectionId = 'testimonials';
+      } else if (path.includes('/contact')) {
+        sectionId = 'contact';
+      } else if (path.includes('/home')) {
+        sectionId = 'home';
+      }
+      
+      if (sectionId) {
+        // Small delay to ensure the page has rendered
+        setTimeout(() => {
+          const element = document.getElementById(sectionId);
+          if (element) {
+            // Calculate offset for mobile navbar height
+            const isMobile = window.innerWidth < 960; // md breakpoint
+            const offset = isMobile ? 92 : 48; // Mobile navbar is taller
+            
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }, 200); // Increased delay for mobile
+      }
+    };
+
+    scrollToSection();
+  }, [location.pathname]);
+
+  return (
+    <>
+      <Navbar selectedLocation={selectedLocation} />
+      <Box component="main" sx={{ paddingTop: { xs: '92px', md: '48px' } }}>
+        <Box id="home">
+          <Hero />
+        </Box>
+        <MenuErrorBoundary>
+          <PartyPlatters 
+            id="menu" 
+            bookingConfig={bookingConfig} 
+            onOpenCart={() => setCartOpen(true)}
+          />
+        </MenuErrorBoundary>
+        <Box id="about">
+          <About />
+        </Box>
+        <Box id="testimonials">
+          <Testimonials />
+        </Box>
+        <FormErrorBoundary>
+          <Box id="contact">
+            <Contact />
+          </Box>
+        </FormErrorBoundary>
+      </Box>
+      <Footer />
+      
+      {/* Order Flow Manager for Modal Flow */}
+      <OrderFlowManager 
+        cartOpen={cartOpen} 
+        onCartClose={() => setCartOpen(false)} 
+      />
+    </>
+  );
+};
 
 const App = () => {
   const [bookingConfig, setBookingConfig] = useState(null);
@@ -45,7 +114,7 @@ const App = () => {
 
   const handleBookingComplete = (config) => {
     setBookingConfig(config);
-    navigate('/home');
+    navigate('/bite-affair/home');
   };
 
   // Create a minimal theme that doesn't override text styles
@@ -77,7 +146,14 @@ const App = () => {
         <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', width: '100%', overflowX: 'hidden' }}>
           <Routes>
             <Route path="/" element={<BookingFlow onComplete={handleBookingComplete} onLocationSelect={handleLocationSelect} />} />
-            <Route path="/home" element={<HomePage bookingConfig={bookingConfig} selectedLocation={selectedLocation} />} />
+            <Route path="/bite-affair/home" element={<HomePage bookingConfig={bookingConfig} selectedLocation={selectedLocation} />} />
+            <Route path="/bite-affair/menu" element={<HomePage bookingConfig={bookingConfig} selectedLocation={selectedLocation} />} />
+            <Route path="/bite-affair/about" element={<HomePage bookingConfig={bookingConfig} selectedLocation={selectedLocation} />} />
+            <Route path="/bite-affair/testimonials" element={<HomePage bookingConfig={bookingConfig} selectedLocation={selectedLocation} />} />
+            <Route path="/bite-affair/contact" element={<HomePage bookingConfig={bookingConfig} selectedLocation={selectedLocation} />} />
+            <Route path="/bite-affair/cart" element={<CartModal open={true} />} />
+            <Route path="/bite-affair/checkout" element={<CheckoutConfirmation open={true} />} />
+            <Route path="/bite-affair/payment" element={<PaymentPage />} />
           </Routes>
         </Box>
       </CartProvider>

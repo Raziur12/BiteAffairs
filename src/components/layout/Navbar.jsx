@@ -10,6 +10,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemButton,
   useTheme,
   useMediaQuery,
   Container,
@@ -54,11 +55,11 @@ const Navbar = ({ selectedLocation: locationFromApp }) => {
   };
 
   const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'Menu', href: '#menu' },
-    { label: 'About', href: '#about' },
-    { label: 'Testimonials', href: '#testimonials' },
-    { label: 'Contact', href: '#contact' }
+    { label: 'Home', href: '/bite-affair/home' },
+    { label: 'Menu', href: '/bite-affair/menu' },
+    { label: 'About', href: '/bite-affair/about' },
+    { label: 'Testimonials', href: '/bite-affair/testimonials' },
+    { label: 'Contact', href: '/bite-affair/contact' }
   ];
 
   const drawer = (
@@ -87,10 +88,28 @@ const Navbar = ({ selectedLocation: locationFromApp }) => {
       <List>
         {navItems.map((item) => (
           <ListItem key={item.label} disablePadding>
-            <ListItemText 
-              primary={item.label}
-              sx={{ textAlign: 'center', py: 1 }}
-            />
+            <ListItemButton
+              component="a"
+              href={item.href}
+              onClick={(e) => {
+                e.preventDefault();
+                handleDrawerToggle(); // Close the drawer first
+                // Navigate to the URL
+                window.location.href = item.href;
+              }}
+              sx={{ 
+                textAlign: 'center', 
+                py: 2,
+                '&:hover': {
+                  bgcolor: 'rgba(0, 0, 0, 0.04)'
+                }
+              }}
+            >
+              <ListItemText 
+                primary={item.label}
+                sx={{ textAlign: 'center' }}
+              />
+            </ListItemButton>
           </ListItem>
         ))}
       </List>

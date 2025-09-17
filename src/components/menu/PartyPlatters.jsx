@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -41,9 +42,11 @@ import {
 import { useCart } from '../../context/CartContext';
 import ItemCustomizationModal from './ItemCustomizationModal';
 import { CartSummary, CartModal } from '../cart';
+import CheckoutConfirmation from '../cart/CheckoutConfirmation';
 import { MenuGridSkeleton, EnhancedLoader, MenuLoadError, EmptyState } from '../common';
 
-const PartyPlatters = ({ id }) => {
+const PartyPlatters = ({ id, onOpenCart }) => {
+  const navigate = useNavigate();
   const { addItem, getItemQuantity, totalItems } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedMenu, setSelectedMenu] = useState('customized');
@@ -57,6 +60,7 @@ const PartyPlatters = ({ id }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [customizationModalOpen, setCustomizationModalOpen] = useState(false);
   const [cartModalOpen, setCartModalOpen] = useState(false);
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [imageErrors, setImageErrors] = useState({});
   const [vegFilter, setVegFilter] = useState(true);
   const [nonVegFilter, setNonVegFilter] = useState(true);
@@ -219,6 +223,11 @@ const PartyPlatters = ({ id }) => {
   // Handle customized item addition
   const handleCustomizedItemAdd = (customizedItem) => {
     addItem(customizedItem);
+  };
+
+  const handleProceedToCheckout = () => {
+    setCartModalOpen(false);
+    setConfirmationOpen(true);
   };
 
   // Navigation functions for service cards
@@ -1099,7 +1108,7 @@ const PartyPlatters = ({ id }) => {
         </Box>
 
         {/* Cart Summary */}
-        <CartSummary onViewCart={() => setCartModalOpen(true)} />
+        <CartSummary onViewCart={onOpenCart || (() => setCartModalOpen(true))} />
 
         {/* Item Customization Modal */}
         <ItemCustomizationModal
@@ -1112,10 +1121,50 @@ const PartyPlatters = ({ id }) => {
           onAddToCart={handleCustomizedItemAdd}
         />
 
-        {/* Cart Modal */}
+        <CheckoutConfirmation
+          open={confirmationOpen}
+          onClose={() => setConfirmationOpen(false)}
+          onConfirm={(details) => {
+            console.log('Order confirmed with details:', details);
+            setConfirmationOpen(false);
+            navigate('/bite-affair/payment');
+          }}
+        />
+
+        <CheckoutConfirmation
+          open={confirmationOpen}
+          onClose={() => setConfirmationOpen(false)}
+          onConfirm={(details) => {
+            console.log('Order confirmed with details:', details);
+            setConfirmationOpen(false);
+            navigate('/bite-affair/payment');
+          }}
+        />
+
+        <CheckoutConfirmation
+          open={confirmationOpen}
+          onClose={() => setConfirmationOpen(false)}
+          onConfirm={(details) => {
+            console.log('Order confirmed with details:', details);
+            setConfirmationOpen(false);
+            navigate('/bite-affair/payment');
+          }}
+        />
+
+        <CheckoutConfirmation
+          open={confirmationOpen}
+          onClose={() => setConfirmationOpen(false)}
+          onConfirm={(details) => {
+            console.log('Order confirmed with details:', details);
+            setConfirmationOpen(false);
+            navigate('/bite-affair/payment');
+          }}
+        />
+
         <CartModal
           open={cartModalOpen}
           onClose={() => setCartModalOpen(false)}
+          onCheckout={handleProceedToCheckout}
         />
 
 
