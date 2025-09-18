@@ -15,15 +15,38 @@ import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Add, Remove, LocationOn, Event, AccessTime, Restaurant } from '@mui/icons-material';
 
-const EventDetailsStep = ({ onNext, updateBookingData }) => {
+const EventDetailsStep = ({ onNext, updateBookingData, initialData = {} }) => {
+  // Debug: Log the initialData to see what we're receiving
+  console.log('EventDetailsStep initialData:', initialData);
+  
+  // Map location name to lowercase value for dropdown
+  const getLocationValue = (locationName) => {
+    if (!locationName) return '';
+    return locationName.toLowerCase();
+  };
+
+  // Map occasion name to dropdown value  
+  const getOccasionValue = (occasionName) => {
+    if (!occasionName) return '';
+    const mapping = {
+      'Birthday': 'birthday',
+      'House Party': 'house_party', 
+      'Pooja': 'pooja',
+      'Pre-Wedding': 'pre_wedding',
+      'Office Party': 'office_party',
+      'Others': 'others'
+    };
+    return mapping[occasionName] || '';
+  };
+
   const [formData, setFormData] = useState({
-    city: '',
-    occasion: '',
+    city: getLocationValue(initialData.location),
+    occasion: getOccasionValue(initialData.occasion),
     eventDate: '',
     deliveryTime: '',
     menu: '',
-    vegGuest: 5,
-    nonVegGuest: 5
+    vegGuest: initialData.vegCount || 5,
+    nonVegGuest: initialData.nonVegCount || 5
   });
 
   const cities = [
@@ -220,83 +243,87 @@ const EventDetailsStep = ({ onNext, updateBookingData }) => {
           </FormControl>
         </Grid>
 
-        {/* Veg Guest Count */}
-        <Grid item xs={6}>
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-            <Restaurant sx={{ mr: 1, color: 'primary.main' }} />
-            <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-              Veg Guest
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <IconButton 
-              onClick={() => handleGuestCountChange('vegGuest', -1)}
-              size="small"
-              sx={{ 
-                border: '1px solid #ccc',
-                borderRadius: 1,
-                width: 32,
-                height: 32
-              }}
-            >
-              <Remove sx={{ fontSize: 16 }} />
-            </IconButton>
-            <Typography variant="h6" sx={{ minWidth: 30, textAlign: 'center' }}>
-              {formData.vegGuest}
-            </Typography>
-            <IconButton 
-              onClick={() => handleGuestCountChange('vegGuest', 1)}
-              size="small"
-              sx={{ 
-                border: '1px solid #ccc',
-                borderRadius: 1,
-                width: 32,
-                height: 32
-              }}
-            >
-              <Add sx={{ fontSize: 16 }} />
-            </IconButton>
-          </Box>
-        </Grid>
+        {/* Veg Guest Count - Show for Jain, Veg, and Veg + NonVeg */}
+        {(initialData.mealType === 'Jain' || initialData.mealType === 'Veg' || initialData.mealType === 'Veg + NonVeg') && (
+          <Grid item xs={6}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+              <Restaurant sx={{ mr: 1, color: 'primary.main' }} />
+              <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+                {initialData.mealType === 'Jain' ? 'Jain Guest' : 'Veg Guest'}
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <IconButton 
+                onClick={() => handleGuestCountChange('vegGuest', -1)}
+                size="small"
+                sx={{ 
+                  border: '1px solid #ccc',
+                  borderRadius: 1,
+                  width: 32,
+                  height: 32
+                }}
+              >
+                <Remove sx={{ fontSize: 16 }} />
+              </IconButton>
+              <Typography variant="h6" sx={{ minWidth: 30, textAlign: 'center' }}>
+                {formData.vegGuest}
+              </Typography>
+              <IconButton 
+                onClick={() => handleGuestCountChange('vegGuest', 1)}
+                size="small"
+                sx={{ 
+                  border: '1px solid #ccc',
+                  borderRadius: 1,
+                  width: 32,
+                  height: 32
+                }}
+              >
+                <Add sx={{ fontSize: 16 }} />
+              </IconButton>
+            </Box>
+          </Grid>
+        )}
 
-        {/* Non-Veg Guest Count */}
-        <Grid item xs={6}>
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-            <Restaurant sx={{ mr: 1, color: 'primary.main' }} />
-            <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-              NonVeg Guest
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <IconButton 
-              onClick={() => handleGuestCountChange('nonVegGuest', -1)}
-              size="small"
-              sx={{ 
-                border: '1px solid #ccc',
-                borderRadius: 1,
-                width: 32,
-                height: 32
-              }}
-            >
-              <Remove sx={{ fontSize: 16 }} />
-            </IconButton>
-            <Typography variant="h6" sx={{ minWidth: 30, textAlign: 'center' }}>
-              {formData.nonVegGuest}
-            </Typography>
-            <IconButton 
-              onClick={() => handleGuestCountChange('nonVegGuest', 1)}
-              size="small"
-              sx={{ 
-                border: '1px solid #ccc',
-                borderRadius: 1,
-                width: 32,
-                height: 32
-              }}
-            >
-              <Add sx={{ fontSize: 16 }} />
-            </IconButton>
-          </Box>
-        </Grid>
+        {/* Non-Veg Guest Count - Show only for Veg + NonVeg */}
+        {initialData.mealType === 'Veg + NonVeg' && (
+          <Grid item xs={6}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+              <Restaurant sx={{ mr: 1, color: 'primary.main' }} />
+              <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
+                NonVeg Guest
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <IconButton 
+                onClick={() => handleGuestCountChange('nonVegGuest', -1)}
+                size="small"
+                sx={{ 
+                  border: '1px solid #ccc',
+                  borderRadius: 1,
+                  width: 32,
+                  height: 32
+                }}
+              >
+                <Remove sx={{ fontSize: 16 }} />
+              </IconButton>
+              <Typography variant="h6" sx={{ minWidth: 30, textAlign: 'center' }}>
+                {formData.nonVegGuest}
+              </Typography>
+              <IconButton 
+                onClick={() => handleGuestCountChange('nonVegGuest', 1)}
+                size="small"
+                sx={{ 
+                  border: '1px solid #ccc',
+                  borderRadius: 1,
+                  width: 32,
+                  height: 32
+                }}
+              >
+                <Add sx={{ fontSize: 16 }} />
+              </IconButton>
+            </Box>
+          </Grid>
+        )}
       </Grid>
 
       {/* See Packages Button */}

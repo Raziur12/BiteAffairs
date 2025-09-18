@@ -41,7 +41,7 @@ const BookingWizardOption2 = ({ initialData, onComplete, onBackToMealType }) => 
   const steps = [
     {
       label: 'Select Event',
-      component: <EventDetailsStep onNext={handleNext} updateBookingData={updateBookingData} />,
+      component: <EventDetailsStep onNext={handleNext} updateBookingData={updateBookingData} initialData={initialData} />,
     },
     {
       label: 'Select Menu',
