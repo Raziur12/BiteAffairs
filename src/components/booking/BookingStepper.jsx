@@ -41,24 +41,8 @@ function CustomStepIcon(props) {
 
 const BookingStepper = ({ activeStep, steps }) => {
   return (
-    <Box sx={{ p: { xs: 2, sm: 3 }, textAlign: 'center', bgcolor: 'white' }}>
-       <Box sx={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          mb: 2,
-        }}>
-          <img 
-            src="/logo/502068640_17845720176490350_3307957330610653706_n.jpg" 
-            alt="Bite Affair Logo" 
-            style={{
-              height: '140px',
-              width: 'auto',
-              objectFit: 'contain'
-            }}
-          />
-        </Box>
-      <Stepper activeStep={activeStep} alternativeLabel>
+    <Box sx={{ p: { xs: 1, sm: 1.5 }, textAlign: 'center', bgcolor: 'white' }}>
+      <Stepper activeStep={activeStep} alternativeLabel sx={{ mt: 0 }}>
         {steps && steps.map((label) => (
           <Step key={label}>
             <StepLabel StepIconComponent={CustomStepIcon}>{label}</StepLabel>

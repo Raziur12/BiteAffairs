@@ -55,16 +55,38 @@ const BookingWizard = ({ onComplete, onLocationSelect }) => {
   ];
 
   return (
-    <Box sx={{ bgcolor: '#1e3a8a', py: 4, minHeight: '100vh' }}>
+    <Box sx={{ bgcolor: '#1e3a8a', py: 2, pt: 4, minHeight: '100vh' }}>
       <Container maxWidth="sm">
-        <Paper elevation={12} sx={{ borderRadius: 4, overflow: 'hidden' }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1 }}>
-            <IconButton onClick={handleBack} disabled={activeStep === 0} aria-label="Go back">
+        <Paper elevation={12} sx={{ borderRadius: 4, overflow: 'hidden', mt: 2 }}>
+          <Box sx={{ position: 'relative', p: 0, py: 0.25 }}>
+            <IconButton 
+              onClick={handleBack} 
+              disabled={activeStep === 0} 
+              aria-label="Go back" 
+              size="small"
+              sx={{ position: 'absolute', top: 2, left: 2, zIndex: 10 }}
+            >
               <ArrowBack />
             </IconButton>
-            <IconButton onClick={() => console.log('Close wizard')} aria-label="Close">
+            <IconButton 
+              onClick={() => console.log('Close wizard')} 
+              aria-label="Close" 
+              size="small"
+              sx={{ position: 'absolute', top: 2, right: 2, zIndex: 10 }}
+            >
               <Close />
             </IconButton>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', py: 0 }}>
+              <img 
+                src="/logo/502068640_17845720176490350_3307957330610653706_n.jpg" 
+                alt="Bite Affair Logo" 
+                style={{
+                  height: '140px',
+                  width: 'auto',
+                  objectFit: 'contain'
+                }}
+              />
+            </Box>
           </Box>
           <BookingStepper activeStep={activeStep} steps={wizardSteps} />
           <Box sx={{ p: { xs: 2, sm: 4 } }}>
