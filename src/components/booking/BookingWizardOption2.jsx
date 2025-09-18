@@ -4,7 +4,7 @@ import { ArrowBack, Close } from '@mui/icons-material';
 import BookingStepper from './BookingStepper';
 import EventDetailsStep from './EventDetailsStep';
 
-const BookingWizardOption2 = ({ initialData, onComplete }) => {
+const BookingWizardOption2 = ({ initialData, onComplete, onBackToMealType }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [bookingData, setBookingData] = useState(initialData || {
     city: '',
@@ -27,7 +27,11 @@ const BookingWizardOption2 = ({ initialData, onComplete }) => {
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if (activeStep === 0 && onBackToMealType) {
+      onBackToMealType();
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    }
   };
 
   const updateBookingData = (data) => {
@@ -58,7 +62,7 @@ const BookingWizardOption2 = ({ initialData, onComplete }) => {
       <Container maxWidth="sm">
         <Paper elevation={12} sx={{ borderRadius: 4, overflow: 'hidden' }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1 }}>
-            <IconButton onClick={handleBack} disabled={activeStep === 0} aria-label="Go back">
+            <IconButton onClick={handleBack} aria-label="Go back">
               <ArrowBack />
             </IconButton>
             <IconButton onClick={() => console.log('Close wizard')} aria-label="Close">

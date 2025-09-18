@@ -6,8 +6,8 @@ import LocationStep from './LocationStep';
 import OccasionStep from './OccasionStep';
 import MealTypeStep from './MealTypeStep';
 
-const BookingWizard = ({ onComplete, onLocationSelect }) => {
-  const [activeStep, setActiveStep] = useState(0);
+const BookingWizard = ({ onComplete, onLocationSelect, initialStep = 0 }) => {
+  const [activeStep, setActiveStep] = useState(initialStep);
   const wizardSteps = ['Choose Location', 'Choose Occasion', 'Meal Type'];
   const [bookingData, setBookingData] = useState({
     location: null,
