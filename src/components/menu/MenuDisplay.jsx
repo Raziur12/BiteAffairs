@@ -48,11 +48,17 @@ const MenuDisplay = ({ dietaryFilter, searchQuery }) => {
         case 'veg':
           data = await import('../../data/customized-menu.json');
           break;
+        case 'customized':
+          data = await import('../../data/customized-menu.json');
+          break;
         case 'non-veg':
           data = await import('../../data/customized-menu.json');
           break;
         case 'cocktail':
           data = await import('../../data/cocktail-party-menu.json');
+          break;
+        case 'packages':
+          data = await import('../../data/packages-menu.json');
           break;
         default:
           data = await import('../../data/jain-menu.json');

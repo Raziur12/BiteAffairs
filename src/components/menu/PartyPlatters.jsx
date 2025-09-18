@@ -45,11 +45,17 @@ import { CartSummary, CartModal } from '../cart';
 import CheckoutConfirmation from '../cart/CheckoutConfirmation';
 import { MenuGridSkeleton, EnhancedLoader, MenuLoadError, EmptyState } from '../common';
 
-const PartyPlatters = ({ id, onOpenCart }) => {
+const PartyPlatters = ({ id, onOpenCart, bookingConfig }) => {
   const navigate = useNavigate();
   const { addItem, getItemQuantity, totalItems } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedMenu, setSelectedMenu] = useState('customized');
+  const [selectedMenu, setSelectedMenu] = useState(() => {
+    // Set initial menu based on booking config if available
+    if (bookingConfig?.menu) {
+      return bookingConfig.menu;
+    }
+    return 'customized';
+  });
   const [sortBy, setSortBy] = useState('');
   const [numberOfPax, setNumberOfPax] = useState('');
   const [location, setLocation] = useState('');
@@ -67,12 +73,23 @@ const PartyPlatters = ({ id, onOpenCart }) => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
 
-  const menuOptions = [
+  const baseMenuOptions = [
     { value: 'jain', label: 'Jain Menu' },
-    { value: 'packages', label: 'Packages' },
-    { value: 'customized', label: 'Customized' },
-    { value: 'cocktail', label: 'Cocktail Menu' }
+    { value: 'veg', label: 'Veg Menu' },
+    { value: 'customized', label: 'Customized Menu' },
+    { value: 'cocktail', label: 'Cocktail Party Menu' },
+    { value: 'packages', label: 'Package Menu' }
   ];
+
+  // Reorder menu options to show selected menu from booking first
+  const menuOptions = (() => {
+    if (bookingConfig?.menu) {
+      const selectedOption = baseMenuOptions.find(option => option.value === bookingConfig.menu);
+      const otherOptions = baseMenuOptions.filter(option => option.value !== bookingConfig.menu);
+      return selectedOption ? [selectedOption, ...otherOptions] : baseMenuOptions;
+    }
+    return baseMenuOptions;
+  })();
 
   const sortOptions = [
     { value: '', label: 'Sort By' },
@@ -90,6 +107,9 @@ const PartyPlatters = ({ id, onOpenCart }) => {
       switch (selectedMenu?.toLowerCase()) {
         case 'jain':
           data = await import('../../data/jain-menu.json');
+          break;
+        case 'veg':
+          data = await import('../../data/customized-menu.json');
           break;
         case 'customized':
           data = await import('../../data/customized-menu.json');
@@ -116,12 +136,19 @@ const PartyPlatters = ({ id, onOpenCart }) => {
     loadMenuData();
   }, [selectedMenu]);
 
+  // Update selected menu when booking config changes
+  useEffect(() => {
+    if (bookingConfig?.menu && bookingConfig.menu !== selectedMenu) {
+      setSelectedMenu(bookingConfig.menu);
+    }
+  }, [bookingConfig]);
+
   // Get all items from all categories with proper filtering
   const getAllItems = () => {
     if (!menuData) return [];
     
     // Handle different menu structures
-    if (selectedMenu === 'customized') {
+    if (selectedMenu === 'customized' || selectedMenu === 'veg') {
       return menuData.categories ? menuData.categories.flatMap(category => category.items || []) : [];
     } else if (selectedMenu === 'cocktail') {
       // For cocktail menu, get items from COCKTAIL_PARTY_MENU
@@ -406,39 +433,69 @@ const PartyPlatters = ({ id, onOpenCart }) => {
               }
             }}
           />
-          <FormControl size="small" sx={{ flex: { xs: 1, sm: 1 }, minWidth: { xs: 'auto', sm: 150 } }}>
-            <Select
-              value={selectedMenu}
-              onChange={(e) => setSelectedMenu(e.target.value)}
-              displayEmpty
-              sx={{ 
-                bgcolor: 'white',
-                borderRadius: '25px',
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '25px !important',
-                  border: '1px solid #e0e0e0',
-                  '&:hover': {
-                    border: '1px solid #bdbdbd'
+          <Box sx={{ flex: { xs: 1, sm: 0.5 }, Width: { xs: '100%', sm: 200 }, position: 'relative' }}>
+            {bookingConfig?.menu && (
+              <Typography 
+                variant="caption" 
+                sx={{ 
+                  position: 'absolute', 
+                  top: -8, 
+                  left: 12, 
+                  bgcolor: '#1976d2', 
+                  color: 'white', 
+                  px: 1, 
+                  borderRadius: '4px',
+                  fontSize: '0.7rem',
+                  zIndex: 1
+                }}
+              >
+                Selected from booking
+              </Typography>
+            )}
+            <FormControl size="small" sx={{ width: '100%' }}>
+              <Select
+                value={selectedMenu}
+                onChange={(e) => setSelectedMenu(e.target.value)}
+                displayEmpty
+                sx={{ 
+                  bgcolor: bookingConfig?.menu === selectedMenu ? '#e3f2fd' : 'white',
+                  borderRadius: '25px',
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '25px !important',
+                    border: bookingConfig?.menu === selectedMenu ? '2px solid #1976d2' : '1px solid #e0e0e0',
+                    '&:hover': {
+                      border: bookingConfig?.menu === selectedMenu ? '2px solid #1565c0' : '1px solid #bdbdbd'
+                    },
+                    '&.Mui-focused': {
+                      border: '2px solid #1976d2'
+                    }
                   },
-                  '&.Mui-focused': {
-                    border: '1px solid #1976d2'
+                  '& .MuiSelect-select': {
+                    borderRadius: '25px'
+                  },
+                  '& fieldset': {
+                    borderRadius: '25px !important'
                   }
-                },
-                '& .MuiSelect-select': {
-                  borderRadius: '25px'
-                },
-                '& fieldset': {
-                  borderRadius: '25px !important'
-                }
-              }}
-            >
-              {menuOptions.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+                }}
+              >
+                {menuOptions.map((option, index) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      {option.label}
+                      {bookingConfig?.menu === option.value && index === 0 && (
+                        <Chip 
+                          label="Your Selection" 
+                          size="small" 
+                          color="primary" 
+                          sx={{ fontSize: '0.7rem', height: 20 }}
+                        />
+                      )}
+                    </Box>
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
         </Box>
 
         {/* Category Buttons */}

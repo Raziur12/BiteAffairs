@@ -34,9 +34,10 @@ const MenuTabs = ({
 
   const menuTabs = [
     { value: 'jain', label: 'Jain Menu', icon: <Restaurant /> },
-    { value: 'packages', label: 'Packages', icon: <LocalDining /> },
-    { value: 'customized', label: 'Customized', icon: <Cake /> },
-    { value: 'cocktail', label: 'Cocktail Menu', icon: <LocalBar /> }
+    { value: 'veg', label: 'Veg Menu', icon: <Restaurant /> },
+    { value: 'customized', label: 'Customized Menu', icon: <Cake /> },
+    { value: 'cocktail', label: 'Cocktail Party Menu', icon: <LocalBar /> },
+    { value: 'packages', label: 'Package Menu', icon: <LocalDining /> }
   ];
 
   const dietaryOptions = [
