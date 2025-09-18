@@ -23,7 +23,9 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  CircularProgress
+  CircularProgress,
+  Radio,
+  RadioGroup
 } from '@mui/material';
 import {
   Search,
@@ -72,6 +74,7 @@ const PartyPlatters = ({ id, onOpenCart, bookingConfig }) => {
   const [nonVegFilter, setNonVegFilter] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
+  const [vegMenuType, setVegMenuType] = useState('standard'); // 'standard' or 'premium'
 
   const baseMenuOptions = [
     { value: 'jain', label: 'Jain Menu' },
@@ -143,6 +146,30 @@ const PartyPlatters = ({ id, onOpenCart, bookingConfig }) => {
     }
   }, [bookingConfig]);
 
+  // Update veg/non-veg filters based on selected menu
+  useEffect(() => {
+    switch (selectedMenu) {
+      case 'jain':
+        // Jain menu - only show jain items (typically veg)
+        setVegFilter(true);
+        setNonVegFilter(false);
+        break;
+      case 'veg':
+        // Veg menu - only show veg items
+        setVegFilter(true);
+        setNonVegFilter(false);
+        break;
+      case 'customized':
+      case 'cocktail':
+      case 'packages':
+        // These menus allow both veg and non-veg options
+        // Keep current filter settings or default to both
+        break;
+      default:
+        break;
+    }
+  }, [selectedMenu]);
+
   // Get all items from all categories with proper filtering
   const getAllItems = () => {
     if (!menuData) return [];
@@ -192,8 +219,18 @@ const PartyPlatters = ({ id, onOpenCart, bookingConfig }) => {
                            (item.name && item.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
                            (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase()));
       
-      // More flexible diet filtering
-      const matchesDiet = (!vegFilter && !nonVegFilter) || 
+      // Handle Veg Menu and Jain Menu Standard/Premium filtering
+      if (selectedMenu === 'veg' || selectedMenu === 'jain') {
+        const matchesMenuType = vegMenuType === 'standard' ? 
+          (!item.isPremium && (selectedMenu === 'veg' ? item.isVeg : item.isJain)) : // Standard: non-premium items
+          (item.isPremium && (selectedMenu === 'veg' ? item.isVeg : item.isJain));   // Premium: premium items
+        
+        if (!matchesMenuType) return false;
+      }
+      
+      // More flexible diet filtering for other menus
+      const matchesDiet = selectedMenu === 'veg' || selectedMenu === 'jain' || // Skip diet filtering for veg/jain menus
+                         (!vegFilter && !nonVegFilter) || 
                          (vegFilter && item.isVeg) || 
                          (nonVegFilter && item.isNonVeg) ||
                          (vegFilter && !item.isNonVeg) || // If not explicitly non-veg, consider as veg option
@@ -530,41 +567,76 @@ const PartyPlatters = ({ id, onOpenCart, bookingConfig }) => {
           <Box sx={{ 
             display: { xs: 'flex', md: 'none' }, 
             alignItems: 'center', 
-            gap: 1, 
-            flexWrap: 'wrap', 
-            justifyContent: 'flex-start' 
+            gap: 0.5, 
+            flexWrap: 'nowrap', 
+            justifyContent: 'flex-start',
+            overflowX: 'auto' // Allow horizontal scroll if needed
           }}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={vegFilter}
-                  onChange={(e) => setVegFilter(e.target.checked)}
-                  color="success"
-                  size="small"
+            {/* Show Standard/Premium radio buttons for Veg Menu and Jain Menu */}
+            {(selectedMenu === 'veg' || selectedMenu === 'jain') && (
+              <RadioGroup
+                row
+                value={vegMenuType}
+                onChange={(e) => setVegMenuType(e.target.value)}
+                sx={{ mr: 2, flexShrink: 0, ml: 0.5 }}
+              >
+                <FormControlLabel
+                  value="standard"
+                  control={<Radio size="small" sx={{ padding: '6px' }} />}
+                  label="Standard"
+                  sx={{ 
+                    '& .MuiFormControlLabel-label': { fontSize: '0.7rem', fontWeight: 500 },
+                    mr: 2
+                  }}
                 />
-              }
-              label="Veg"
-              sx={{ 
-                '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 },
-                mr: 1
-              }}
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={nonVegFilter}
-                  onChange={(e) => setNonVegFilter(e.target.checked)}
-                  color="error"
-                  size="small"
+                <FormControlLabel
+                  value="premium"
+                  control={<Radio size="small" sx={{ padding: '6px' }} />}
+                  label="Premium"
+                  sx={{ 
+                    '& .MuiFormControlLabel-label': { fontSize: '0.7rem', fontWeight: 500 },
+                    mr: 0.5
+                  }}
                 />
-              }
-              label="Non Veg"
-              sx={{ 
-                '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 },
-                mr: 2
-              }}
-            />
-            <FormControl size="small" sx={{ minWidth: 90, mr: 1 }}>
+              </RadioGroup>
+            )}
+            
+            {/* Show veg/non-veg switches only for customized, cocktail, and packages menus */}
+            {(selectedMenu === 'customized' || selectedMenu === 'cocktail' || selectedMenu === 'packages') && (
+              <>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={vegFilter}
+                      onChange={(e) => setVegFilter(e.target.checked)}
+                      color="success"
+                      size="small"
+                    />
+                  }
+                  label="Veg"
+                  sx={{ 
+                    '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 },
+                    mr: 1
+                  }}
+                />
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={nonVegFilter}
+                      onChange={(e) => setNonVegFilter(e.target.checked)}
+                      color="error"
+                      size="small"
+                    />
+                  }
+                  label="Non Veg"
+                  sx={{ 
+                    '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 },
+                    mr: 2
+                  }}
+                />
+              </>
+            )}
+            <FormControl size="small" sx={{ minWidth: 70, mr: 0.5, flexShrink: 0 }}>
               <Select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
@@ -598,7 +670,8 @@ const PartyPlatters = ({ id, onOpenCart, bookingConfig }) => {
               type="number"
               inputProps={{ min: 1, max: 1000 }}
               sx={{ 
-                width: 100,
+                width: 70, // Further reduced width for mobile
+                flexShrink: 0, // Prevent shrinking
                 '& .MuiOutlinedInput-root': {
                   borderRadius: '20px',
                   height: 32,
@@ -613,7 +686,7 @@ const PartyPlatters = ({ id, onOpenCart, bookingConfig }) => {
                 },
                 '& .MuiOutlinedInput-input': {
                   fontSize: '0.75rem',
-                  padding: '6px 12px'
+                  padding: '6px 8px' // Reduced padding
                 }
               }}
             />
@@ -621,37 +694,70 @@ const PartyPlatters = ({ id, onOpenCart, bookingConfig }) => {
 
           {/* Desktop Layout - Split controls */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'space-between', alignItems: 'center' }}>
-            {/* Left side - Veg/Non-Veg filters */}
+            {/* Left side - Veg/Non-Veg filters or Standard/Premium radio buttons */}
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={vegFilter}
-                    onChange={(e) => setVegFilter(e.target.checked)}
-                    color="success"
-                    size="small"
+              {/* Show Standard/Premium radio buttons for Veg Menu and Jain Menu */}
+              {(selectedMenu === 'veg' || selectedMenu === 'jain') && (
+                <RadioGroup
+                  row
+                  value={vegMenuType}
+                  onChange={(e) => setVegMenuType(e.target.value)}
+                  sx={{ mr: 2 }}
+                >
+                  <FormControlLabel
+                    value="standard"
+                    control={<Radio size="small" />}
+                    label="Standard"
+                    sx={{ 
+                      '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 },
+                      mr: 1
+                    }}
                   />
-                }
-                label="Veg"
-                sx={{ 
-                  '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 },
-                  mr: 1
-                }}
-              />
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={nonVegFilter}
-                    onChange={(e) => setNonVegFilter(e.target.checked)}
-                    color="error"
-                    size="small"
+                  <FormControlLabel
+                    value="premium"
+                    control={<Radio size="small" />}
+                    label="Premium"
+                    sx={{ 
+                      '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 }
+                    }}
                   />
-                }
-                label="Non Veg"
-                sx={{ 
-                  '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 }
-                }}
-              />
+                </RadioGroup>
+              )}
+              
+              {/* Show veg/non-veg switches only for customized, cocktail, and packages menus */}
+              {(selectedMenu === 'customized' || selectedMenu === 'cocktail' || selectedMenu === 'packages') && (
+                <>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={vegFilter}
+                        onChange={(e) => setVegFilter(e.target.checked)}
+                        color="success"
+                        size="small"
+                      />
+                    }
+                    label="Veg"
+                    sx={{ 
+                      '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 },
+                      mr: 1
+                    }}
+                  />
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={nonVegFilter}
+                        onChange={(e) => setNonVegFilter(e.target.checked)}
+                        color="error"
+                        size="small"
+                      />
+                    }
+                    label="Non Veg"
+                    sx={{ 
+                      '& .MuiFormControlLabel-label': { fontSize: '0.75rem', fontWeight: 500 }
+                    }}
+                  />
+                </>
+              )}
             </Box>
 
             {/* Right side - Sort By and No of Pax */}

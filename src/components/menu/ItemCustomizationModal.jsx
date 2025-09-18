@@ -34,6 +34,7 @@ const ItemCustomizationModal = ({
   const [selectedStarters, setSelectedStarters] = useState([]);
   const [selectedMainCourse, setSelectedMainCourse] = useState([]);
   const [selectedBreads, setSelectedBreads] = useState([]);
+  const [selectedDesserts, setSelectedDesserts] = useState([]);
   const [serves, setServes] = useState(2);
 
   if (!item) return null;
@@ -88,8 +89,17 @@ const ItemCustomizationModal = ({
   ];
 
   const breadOptions = [
-    'Tandoor Roti',
-    'Butter Roti'
+    'Tandoori Roti',
+    'Butter Naan',
+    'Garlic Naan',
+    'Misi Roti'
+  ];
+
+  const dessertOptions = [
+    'Gulab Jamun',
+    'Brownies',
+    'Kheer',
+    'Moong Daal Halwa'
   ];
 
   const handleStarterChange = (starter) => {
@@ -116,6 +126,14 @@ const ItemCustomizationModal = ({
     );
   };
 
+  const handleDessertChange = (dessert) => {
+    setSelectedDesserts(prev => 
+      prev.includes(dessert) 
+        ? prev.filter(d => d !== dessert)
+        : [...prev, dessert]
+    );
+  };
+
   const handleAddToCart = () => {
     const customizedItem = {
       ...item,
@@ -125,6 +143,7 @@ const ItemCustomizationModal = ({
         starters: selectedStarters,
         mainCourse: selectedMainCourse,
         breads: selectedBreads,
+        desserts: selectedDesserts,
         serves
       }
     };
@@ -138,6 +157,7 @@ const ItemCustomizationModal = ({
     setSelectedStarters([]);
     setSelectedMainCourse([]);
     setSelectedBreads([]);
+    setSelectedDesserts([]);
     setServes(2);
   };
 
@@ -187,6 +207,36 @@ const ItemCustomizationModal = ({
       </DialogTitle>
 
       <DialogContent sx={{ pt: 2 }}>
+        {/* Item Breakdown */}
+        <Box sx={{ mb: 3, p: 2, bgcolor: '#f8f9fa', borderRadius: 2 }}>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>•</Typography>
+              <Typography variant="body2">3 Starters</Typography>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>•</Typography>
+              <Typography variant="body2">2 Breads</Typography>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>•</Typography>
+              <Typography variant="body2">3 Main Course</Typography>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>•</Typography>
+              <Typography variant="body2">1 Dessert</Typography>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>•</Typography>
+              <Typography variant="body2">1 Rice</Typography>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>•</Typography>
+              <Typography variant="body2">Raita & Salad</Typography>
+            </Box>
+          </Box>
+        </Box>
+
         {/* Customize Quantity */}
         <Box sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
@@ -308,6 +358,32 @@ const ItemCustomizationModal = ({
                   />
                 }
                 label={bread}
+                sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.875rem' } }}
+              />
+            ))}
+          </FormGroup>
+        </Box>
+
+        {/* Desserts */}
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="body2" sx={{ mb: 1, fontWeight: 500 }}>
+            Desserts
+          </Typography>
+          <Typography variant="caption" color="text.secondary" sx={{ mb: 1, display: 'block' }}>
+            Please select any 1 item
+          </Typography>
+          <FormGroup>
+            {dessertOptions.map((dessert) => (
+              <FormControlLabel
+                key={dessert}
+                control={
+                  <Checkbox
+                    checked={selectedDesserts.includes(dessert)}
+                    onChange={() => handleDessertChange(dessert)}
+                    size="small"
+                  />
+                }
+                label={dessert}
                 sx={{ '& .MuiFormControlLabel-label': { fontSize: '0.875rem' } }}
               />
             ))}
