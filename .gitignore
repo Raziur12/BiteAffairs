@@ -105,9 +105,14 @@ temp/
 *.sw?
 
 # Design files and documentation
-Bite Affair/
-Bite Affair (1)/
 PROJECT_ANALYSIS_REPORT.md
+Bite Affair (1)/
+Bite Affair/
+cocktail-party-menu.json
+customized-menu.json
+jain-menu.json
+packages-menu.json
+
 
 # Design assets (PNG files in root)
 *.png

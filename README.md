@@ -150,12 +150,12 @@ Each menu type has its own JSON structure:
 - Update `src/index.css` for custom CSS classes
 - Component-specific styles in respective component files
 
-## 📞 Contact Information
+<!-- ## 📞 Contact Information
 
 - **Phone**: +91 92115 70030
 - **Email**: orders@biteaffair.com
 - **Service Area**: Gurugram & NCR
-- **Availability**: 24/7
+- **Availability**: 24/7 -->
 
 ## 🚀 Deployment
 
