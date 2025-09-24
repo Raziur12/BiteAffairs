@@ -1281,6 +1281,7 @@ const PartyPlatters = ({ id, onOpenCart, bookingConfig }) => {
             setSelectedItem(null);
           }}
           item={selectedItem}
+          menuType={selectedMenu}
           onAddToCart={handleCustomizedItemAdd}
         />
 

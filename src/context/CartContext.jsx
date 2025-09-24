@@ -11,17 +11,17 @@ const cartReducer = (state, action) => {
       
       if (existingItemIndex >= 0) {
         const updatedItems = [...state.items];
-        updatedItems[existingItemIndex].quantity += action.payload.quantity;
+        updatedItems[existingItemIndex].quantity += Number(action.payload.quantity);
         return {
           ...state,
           items: updatedItems,
-          totalItems: state.totalItems + action.payload.quantity
+          totalItems: Number(state.totalItems) + Number(action.payload.quantity)
         };
       } else {
         return {
           ...state,
           items: [...state.items, action.payload],
-          totalItems: state.totalItems + action.payload.quantity
+          totalItems: Number(state.totalItems) + Number(action.payload.quantity)
         };
       }
     

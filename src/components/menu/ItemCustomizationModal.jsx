@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
+import { getMenuItems } from '../../data/menuItems';
 import {
   Dialog,
   DialogTitle,
@@ -27,17 +28,18 @@ const ItemCustomizationModal = ({
   open, 
   onClose, 
   item, 
+  menuType = 'jain',
   onAddToCart 
 }) => {
-  const [quantity, setQuantity] = useState(1);
+  // ALL useState hooks must be declared FIRST, before any conditional logic
+  const [Serves, setServes] = useState(1);
   const [portionSize, setPortionSize] = useState('2');
   const [selectedStarters, setSelectedStarters] = useState([]);
   const [selectedMainCourse, setSelectedMainCourse] = useState([]);
   const [selectedBreads, setSelectedBreads] = useState([]);
   const [selectedDesserts, setSelectedDesserts] = useState([]);
-  const [serves, setServes] = useState(2);
+  const [selectedPackageType, setSelectedPackageType] = useState('standard');
 
-  if (!item) return null;
 
   // Get item image with fallback
   const getItemImage = (imagePath, itemName) => {
@@ -72,35 +74,14 @@ const ItemCustomizationModal = ({
     return fallbackImages.default;
   };
 
-  const starterOptions = [
-    'Paneer Tikka',
-    'Malai Paneer Tikka',
-    'Haryali Paneer Tikka',
-    'Soya Chaap Tikka',
-    'Malai Soya Tikka'
-  ];
-
-  const mainCourseOptions = [
-    'Paneer Matar',
-    'Paneer Shahi',
-    'Paneer Kadai',
-    'Mix Veg',
-    'Daal Makhani'
-  ];
-
-  const breadOptions = [
-    'Tandoori Roti',
-    'Butter Naan',
-    'Garlic Naan',
-    'Misi Roti'
-  ];
-
-  const dessertOptions = [
-    'Gulab Jamun',
-    'Brownies',
-    'Kheer',
-    'Moong Daal Halwa'
-  ];
+  // Get menu items using the new service
+  const currentMenuItems = getMenuItems(menuType, selectedPackageType);
+  
+  // Extract options safely
+  const starterOptions = currentMenuItems?.starters || [];
+  const mainCourseOptions = currentMenuItems?.mainCourse || [];
+  const breadOptions = currentMenuItems?.breads || [];
+  const dessertOptions = currentMenuItems?.desserts || [];
 
   const handleStarterChange = (starter) => {
     setSelectedStarters(prev => 
@@ -133,35 +114,43 @@ const ItemCustomizationModal = ({
         : [...prev, dessert]
     );
   };
-
   const handleAddToCart = () => {
+    // Generate unique ID for cart item
+    const itemId = `${item.name}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    
     const customizedItem = {
       ...item,
-      quantity,
+      id: itemId,
+      quantity: Number(Serves), // Ensure quantity is a number
+      price: Number(item.price) || 250, // Ensure price is a number
       portionSize,
       customizations: {
         starters: selectedStarters,
         mainCourse: selectedMainCourse,
         breads: selectedBreads,
         desserts: selectedDesserts,
-        serves
+        ...(menuType === 'packages' && { packageType: selectedPackageType })
       }
     };
+    
     
     onAddToCart(customizedItem);
     onClose();
     
     // Reset form
-    setQuantity(1);
+    setServes(1);
     setPortionSize('2');
     setSelectedStarters([]);
     setSelectedMainCourse([]);
     setSelectedBreads([]);
     setSelectedDesserts([]);
-    setServes(2);
+    setSelectedPackageType('standard');
   };
 
-  const totalPrice = item.price * quantity;
+  // Simple null check - keep original logic
+  if (!item) return null;
+
+  const totalPrice = item.price * Serves;
 
   return (
     <Dialog
@@ -171,7 +160,7 @@ const ItemCustomizationModal = ({
       PaperProps={{
         sx: {
           borderRadius: 3,
-          maxHeight: '60vh',
+          maxHeight: '90vh',
           maxWidth: '400px',
           width: '90%'
         }
@@ -237,10 +226,10 @@ const ItemCustomizationModal = ({
           </Box>
         </Box>
 
-        {/* Customize Quantity */}
+        {/* Customize Serves */}
         <Box sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
-            Customize Quantity
+            Customize Serves
           </Typography>
           
           <Box sx={{ mb: 2 }}>
@@ -260,17 +249,17 @@ const ItemCustomizationModal = ({
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <IconButton
                 size="small"
-                onClick={() => setServes(Math.max(1, serves - 1))}
+                onClick={() => setServes(Math.max(1, Serves - 1))}
                 sx={{ bgcolor: '#f5f5f5' }}
               >
                 <Remove sx={{ fontSize: 16 }} />
               </IconButton>
               <Typography variant="body1" sx={{ minWidth: 20, textAlign: 'center' }}>
-                {serves}
+                {Serves}
               </Typography>
               <IconButton
                 size="small"
-                onClick={() => setServes(serves + 1)}
+                onClick={() => setServes(Serves + 1)}
                 sx={{ bgcolor: '#f5f5f5' }}
               >
                 <Add sx={{ fontSize: 16 }} />
@@ -281,9 +270,46 @@ const ItemCustomizationModal = ({
 
         <Divider sx={{ my: 2 }} />
 
+        {/* Package Menu Selection - Only show for Package Menu */}
+        {menuType === 'packages' && (
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+              Select Package Type
+            </Typography>
+            <RadioGroup
+              value={selectedPackageType}
+              onChange={(e) => setSelectedPackageType(e.target.value)}
+              row
+            >
+              <FormControlLabel 
+                value="standard" 
+                control={<Radio size="small" />} 
+                label={
+                  <Box>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>STANDARD</Typography>
+                    <Typography variant="caption" color="text.secondary">Menu Veg (499)</Typography>
+                  </Box>
+                }
+              />
+              <FormControlLabel 
+                value="premium" 
+                control={<Radio size="small" />} 
+                label={
+                  <Box>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>PREMIUM</Typography>
+                    <Typography variant="caption" color="text.secondary">Menu Veg (499)</Typography>
+                  </Box>
+                }
+              />
+            </RadioGroup>
+          </Box>
+        )}
+
+        <Divider sx={{ my: 2 }} />
+
         {/* Customize Your Meal */}
         <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
-          Customize Your Meal
+          {menuType === 'packages' ? 'Package Contents' : 'Customize Your Meal'}
         </Typography>
 
         {/* Starters */}
@@ -292,7 +318,7 @@ const ItemCustomizationModal = ({
             Starters
           </Typography>
           <Typography variant="caption" color="text.secondary" sx={{ mb: 1, display: 'block' }}>
-            Please select any 3 items
+            {menuType === 'packages' ? 'Package includes these items (for 20 PAX)' : 'Please select any 3 items'}
           </Typography>
           <FormGroup>
             {starterOptions.map((starter) => (
@@ -318,7 +344,7 @@ const ItemCustomizationModal = ({
             Main Course
           </Typography>
           <Typography variant="caption" color="text.secondary" sx={{ mb: 1, display: 'block' }}>
-            Please select any 3 items
+            {menuType === 'packages' ? 'Package includes these items (for 20 PAX)' : 'Please select any 3 items'}
           </Typography>
           <FormGroup>
             {mainCourseOptions.map((course) => (
@@ -344,7 +370,7 @@ const ItemCustomizationModal = ({
             Breads
           </Typography>
           <Typography variant="caption" color="text.secondary" sx={{ mb: 1, display: 'block' }}>
-            Please select any 2 items
+            {menuType === 'packages' ? 'Package includes these items (for 20 PAX)' : 'Please select any 2 items'}
           </Typography>
           <FormGroup>
             {breadOptions.map((bread) => (
@@ -370,7 +396,7 @@ const ItemCustomizationModal = ({
             Desserts
           </Typography>
           <Typography variant="caption" color="text.secondary" sx={{ mb: 1, display: 'block' }}>
-            Please select any 1 item
+            {menuType === 'packages' ? 'Package includes these items (for 20 PAX)' : 'Please select any 1 item'}
           </Typography>
           <FormGroup>
             {dessertOptions.map((dessert) => (
@@ -390,31 +416,6 @@ const ItemCustomizationModal = ({
           </FormGroup>
         </Box>
 
-        <Divider sx={{ my: 2 }} />
-
-        {/* Serves */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-          <Typography variant="body2">Serves</Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <IconButton
-              size="small"
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              sx={{ bgcolor: '#f5f5f5' }}
-            >
-              <Remove sx={{ fontSize: 16 }} />
-            </IconButton>
-            <Typography variant="body1" sx={{ minWidth: 20, textAlign: 'center' }}>
-              {quantity}
-            </Typography>
-            <IconButton
-              size="small"
-              onClick={() => setQuantity(quantity + 1)}
-              sx={{ bgcolor: '#f5f5f5' }}
-            >
-              <Add sx={{ fontSize: 16 }} />
-            </IconButton>
-          </Box>
-        </Box>
       </DialogContent>
 
       <DialogActions sx={{ p: 3, pt: 1 }}>

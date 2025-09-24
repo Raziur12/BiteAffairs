@@ -102,6 +102,23 @@ const CheckoutConfirmation = ({ open, onClose, onConfirm }) => {
                 error={!!errors.name}
                 helperText={errors.name}
                 variant="outlined"
+                size="small"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '12px',
+                    height: '40px',
+                    fontFamily: 'Times New Roman, serif',
+                    '& fieldset': {
+                      borderRadius: '12px',
+                    }
+                  },
+                  '& .MuiInputLabel-root': {
+                    fontFamily: 'Times New Roman, serif',
+                  },
+                  '& .MuiFormHelperText-root': {
+                    fontFamily: 'Times New Roman, serif',
+                  }
+                }}
               />
 
               <TextField
@@ -113,6 +130,23 @@ const CheckoutConfirmation = ({ open, onClose, onConfirm }) => {
                 error={!!errors.email}
                 helperText={errors.email}
                 variant="outlined"
+                size="small"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '12px',
+                    height: '40px',
+                    fontFamily: 'Times New Roman, serif',
+                    '& fieldset': {
+                      borderRadius: '12px',
+                    }
+                  },
+                  '& .MuiInputLabel-root': {
+                    fontFamily: 'Times New Roman, serif',
+                  },
+                  '& .MuiFormHelperText-root': {
+                    fontFamily: 'Times New Roman, serif',
+                  }
+                }}
               />
 
               <TextField
@@ -124,6 +158,23 @@ const CheckoutConfirmation = ({ open, onClose, onConfirm }) => {
                 helperText={errors.phone}
                 variant="outlined"
                 placeholder="10-digit phone number"
+                size="small"
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '12px',
+                    height: '40px',
+                    fontFamily: 'Times New Roman, serif',
+                    '& fieldset': {
+                      borderRadius: '12px',
+                    }
+                  },
+                  '& .MuiInputLabel-root': {
+                    fontFamily: 'Times New Roman, serif',
+                  },
+                  '& .MuiFormHelperText-root': {
+                    fontFamily: 'Times New Roman, serif',
+                  }
+                }}
               />
 
               <Box sx={{ mt: 2 }}>
@@ -213,6 +264,23 @@ const CheckoutConfirmation = ({ open, onClose, onConfirm }) => {
             required
             error={!!errors.name}
             helperText={errors.name}
+            size="small"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '12px',
+                height: '40px',
+                fontFamily: 'Times New Roman, serif',
+                '& fieldset': {
+                  borderRadius: '12px',
+                }
+              },
+              '& .MuiInputLabel-root': {
+                fontFamily: 'Times New Roman, serif',
+              },
+              '& .MuiFormHelperText-root': {
+                fontFamily: 'Times New Roman, serif',
+              }
+            }}
           />
           <TextField
             fullWidth
@@ -223,6 +291,23 @@ const CheckoutConfirmation = ({ open, onClose, onConfirm }) => {
             required
             error={!!errors.email}
             helperText={errors.email}
+            size="small"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '12px',
+                height: '40px',
+                fontFamily: 'Times New Roman, serif',
+                '& fieldset': {
+                  borderRadius: '12px',
+                }
+              },
+              '& .MuiInputLabel-root': {
+                fontFamily: 'Times New Roman, serif',
+              },
+              '& .MuiFormHelperText-root': {
+                fontFamily: 'Times New Roman, serif',
+              }
+            }}
           />
           <TextField
             fullWidth
@@ -234,6 +319,23 @@ const CheckoutConfirmation = ({ open, onClose, onConfirm }) => {
             error={!!errors.phone}
             helperText={errors.phone}
             inputProps={{ inputMode: 'tel' }}
+            size="small"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '12px',
+                height: '40px',
+                fontFamily: 'Times New Roman, serif',
+                '& fieldset': {
+                  borderRadius: '12px',
+                }
+              },
+              '& .MuiInputLabel-root': {
+                fontFamily: 'Times New Roman, serif',
+              },
+              '& .MuiFormHelperText-root': {
+                fontFamily: 'Times New Roman, serif',
+              }
+            }}
           />
         </Box>
       </DialogContent>
