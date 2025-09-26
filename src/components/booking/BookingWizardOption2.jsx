@@ -58,7 +58,7 @@ const BookingWizardOption2 = ({ initialData, onComplete, onBackToMealType }) => 
   ];
 
   return (
-    <Box sx={{ bgcolor: '#1e3a8a', py: 7, minHeight: '100vh' }}>
+    <Box sx={{ bgcolor: '#1e3a8a', py: 4, minHeight: '100vh' }}>
       <Container maxWidth="sm">
         <Paper elevation={12} sx={{ borderRadius: 4, overflow: 'hidden' }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1 }}>
