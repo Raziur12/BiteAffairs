@@ -14,6 +14,7 @@ import BookingFlow from './components/booking/BookingFlow';
 import PaymentPage from './components/booking/PaymentPage';
 import CartModal from './components/cart/CartModal';
 import CheckoutConfirmation from './components/cart/CheckoutConfirmation';
+import OrderStatus from './components/cart/OrderStatus';
 import OrderFlowManager from './components/order/OrderFlowManager';
 
 const HomePage = ({ bookingConfig, selectedLocation }) => {
@@ -153,6 +154,7 @@ const App = () => {
             <Route path="/bite-affair/contact" element={<HomePage bookingConfig={bookingConfig} selectedLocation={selectedLocation} />} />
             <Route path="/bite-affair/cart" element={<CartModal open={true} />} />
             <Route path="/bite-affair/checkout" element={<CheckoutConfirmation open={true} />} />
+            <Route path="/bite-affair/order-status/:orderId" element={<OrderStatus />} />
             <Route path="/bite-affair/payment" element={<PaymentPage />} />
           </Routes>
         </Box>

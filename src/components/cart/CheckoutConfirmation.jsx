@@ -15,6 +15,8 @@ import {
 } from '@mui/material';
 import { Close, ArrowBack } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
+import orderService from '../../services/orderService';
 
 const CheckoutConfirmation = ({ open, onClose, onConfirm }) => {
   const [name, setName] = useState('');
@@ -24,12 +26,57 @@ const CheckoutConfirmation = ({ open, onClose, onConfirm }) => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
+  const { items, getTotalPrice } = useCart();
   
   // Check if this is being rendered as a full page (route-based) or as a modal
   const isFullPage = location.pathname === '/bite-affair/checkout';
   
   const handleGoBack = () => {
     navigate('/bite-affair/cart');
+  };
+
+  // Generate unique order ID
+  const generateOrderId = () => {
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substr(2, 5);
+    return `ORD-${timestamp}-${random.toUpperCase()}`;
+  };
+
+  // Prepare order data for submission
+  const prepareOrderData = () => {
+    const orderId = generateOrderId();
+    const timestamp = new Date().toISOString();
+    const totalAmount = getTotalPrice();
+
+    return {
+      orderId,
+      timestamp,
+      status: 'pending',
+      customerDetails: {
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        phone: phone.trim()
+      },
+      items: items.map(item => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        portionSize: item.portionSize || 'Standard',
+        customizations: item.customizations || {},
+        subtotal: item.price * item.quantity
+      })),
+      orderSummary: {
+        totalItems: items.reduce((sum, item) => sum + item.quantity, 0),
+        totalAmount,
+        currency: 'INR'
+      },
+      metadata: {
+        source: 'web',
+        userAgent: navigator.userAgent,
+        timestamp: timestamp
+      }
+    };
   };
 
   const validate = () => {
@@ -53,14 +100,47 @@ const CheckoutConfirmation = ({ open, onClose, onConfirm }) => {
     if (!validate()) return;
 
     setLoading(true);
-    // Simulate API call to send confirmation
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setLoading(false);
+    
+    try {
+      // Step 1: Prepare order data
+      const orderData = prepareOrderData();
+      console.log('Prepared order data:', orderData);
 
-    if (isFullPage) {
-      navigate('/bite-affair/payment');
-    } else {
-      onConfirm({ name, email, phone });
+      // Step 2: Submit order for admin approval
+      const result = await orderService.submitOrder(orderData);
+      
+      if (result.success) {
+        console.log('Order submitted successfully:', result.orderId);
+        
+        // Step 3: Navigate to order status page instead of payment
+        if (isFullPage) {
+          navigate(`/bite-affair/order-status/${result.orderId}`);
+        } else {
+          // For modal version, close modal and show success message
+          onConfirm({ 
+            name, 
+            email, 
+            phone, 
+            orderId: result.orderId,
+            status: 'pending',
+            message: result.message
+          });
+        }
+      } else {
+        // Handle submission error
+        console.error('Order submission failed:', result.error);
+        setErrors({ 
+          submit: result.message || 'Failed to submit order. Please try again.' 
+        });
+      }
+      
+    } catch (error) {
+      console.error('Order submission error:', error);
+      setErrors({ 
+        submit: 'An unexpected error occurred. Please try again.' 
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -177,6 +257,24 @@ const CheckoutConfirmation = ({ open, onClose, onConfirm }) => {
                 }}
               />
 
+              {errors.submit && (
+                <Box sx={{ 
+                  mt: 2, 
+                  p: 2, 
+                  bgcolor: '#ffebee', 
+                  borderRadius: '8px', 
+                  border: '1px solid #f44336' 
+                }}>
+                  <Typography 
+                    color="error" 
+                    variant="body2" 
+                    sx={{ fontFamily: 'Times New Roman, serif' }}
+                  >
+                    {errors.submit}
+                  </Typography>
+                </Box>
+              )}
+
               <Box sx={{ mt: 2 }}>
                 <Button
                   fullWidth
@@ -188,6 +286,7 @@ const CheckoutConfirmation = ({ open, onClose, onConfirm }) => {
                     py: 1.5,
                     fontSize: '1rem',
                     fontWeight: 600,
+                    fontFamily: 'Times New Roman, serif',
                     '&:hover': {
                       bgcolor: '#303f9f'
                     }
