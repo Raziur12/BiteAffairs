@@ -55,7 +55,7 @@ const BookingWizard = ({ onComplete, onLocationSelect, initialStep = 0 }) => {
   ];
 
   return (
-    <Box sx={{ bgcolor: '#1e3a8a', py: 2, pt: 4, minHeight: '100vh' }}>
+    <Box sx={{ bgcolor: '#1e3a8a', py: 2, pt: 10, minHeight: '100vh' }}>
       <Container maxWidth="sm">
         <Paper elevation={12} sx={{ borderRadius: 4, overflow: 'hidden', mt: 2 }}>
           <Box sx={{ position: 'relative', p: 0, py: 0.25 }}>
